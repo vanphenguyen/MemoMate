@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'app_controller.dart';
+import 'l10n/app_localizations.dart';
 import 'screens/home_shell.dart';
+import 'texts.dart';
 
 /// Gives every screen the [AppController] and rebuilds them when it changes.
 class AppScope extends InheritedNotifier<AppController> {
@@ -10,12 +12,24 @@ class AppScope extends InheritedNotifier<AppController> {
 
   static AppController of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<AppScope>()!.notifier!;
+
+  /// The app's words in the current language. Screens that call this are
+  /// rebuilt when the phone's language changes.
+  static AppTexts textsOf(BuildContext context) {
+    Localizations.localeOf(context);
+    return of(context).texts;
+  }
 }
 
 class NhoNheApp extends StatelessWidget {
-  const NhoNheApp({super.key, required this.controller});
+  const NhoNheApp({super.key, required this.controller, this.locale});
 
   final AppController controller;
+
+  /// Forces a language (used by tests); normally the phone's is followed.
+  final Locale? locale;
+
+  static const appName = 'Nhớ Nhé';
 
   static const seedColor = Color(0xFF5B5BD6);
 
@@ -24,8 +38,17 @@ class NhoNheApp extends StatelessWidget {
     return AppScope(
       controller: controller,
       child: MaterialApp(
-        title: 'Nhớ Nhé',
+        title: appName,
         debugShowCheckedModeBanner: false,
+        locale: locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localeListResolutionCallback: (device, supported) => resolveLocale(device),
+        builder: (context, child) {
+          // Keeps reminder names and notifications in the language shown.
+          controller.setLocale(Localizations.localeOf(context));
+          return child!;
+        },
         theme: _theme(Brightness.light),
         darkTheme: _theme(Brightness.dark),
         home: const HomeShell(),

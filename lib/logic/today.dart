@@ -54,7 +54,7 @@ List<TodayItem> buildToday(
   ];
   items.sort((a, b) {
     final byTime = a.time.compareTo(b.time);
-    return byTime != 0 ? byTime : a.reminder.title.compareTo(b.reminder.title);
+    return byTime != 0 ? byTime : a.reminder.id.compareTo(b.reminder.id);
   });
   return items;
 }

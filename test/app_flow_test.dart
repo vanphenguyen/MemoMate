@@ -7,6 +7,7 @@ import 'package:nho_nhe/models/reminder.dart';
 import 'package:nho_nhe/models/schedule.dart';
 import 'package:nho_nhe/services/reminder_notifier.dart';
 import 'package:nho_nhe/services/reminder_store.dart';
+import 'package:nho_nhe/texts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -16,7 +17,7 @@ void main() {
   final now = DateTime(2026, 11, 16, 10, 0);
   late NoopReminderNotifier notifier;
 
-  Future<AppController> boot(WidgetTester tester) async {
+  Future<AppController> boot(WidgetTester tester, {String language = 'vi'}) async {
     SharedPreferences.setMockInitialValues({});
     notifier = NoopReminderNotifier();
     // Asset loading is real I/O, which only completes inside runAsync.
@@ -24,11 +25,15 @@ void main() {
           groups: await TemplateRepository().loadAll(),
           store: await ReminderStore.load(),
           notifier: notifier,
+          texts: AppTexts(Locale(language)),
           clock: () => now,
         )))!;
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
-    await tester.pumpWidget(NhoNheApp(controller: controller));
+    // Start from nothing, so a second boot in one test is a fresh app.
+    await tester.pumpWidget(const SizedBox());
+    await tester.pumpWidget(NhoNheApp(controller: controller, locale: Locale(language)));
+    await tester.pumpAndSettle();
     return controller;
   }
 
@@ -46,7 +51,9 @@ void main() {
     await tester.pumpAndSettle();
     expect(controller.reminders.single.id, 'uong-thuoc');
     expect(notifier.permissionRequests, 1);
-    expect(notifier.lastSynced.single.id, 'uong-thuoc');
+    expect(notifier.lastSynced.single.reminder.id, 'uong-thuoc');
+    expect(notifier.lastSynced.single.title, 'Uống thuốc');
+    expect(notifier.lastSynced.single.body, 'Đến giờ uống thuốc rồi.');
 
     await tester.tap(find.text('Hôm nay').last);
     await tester.pumpAndSettle();
@@ -93,6 +100,7 @@ void main() {
     final made = controller.reminders.single;
     expect(made.isCustom, isTrue);
     expect(made.title, 'Cho mèo ăn');
+    expect(notifier.lastSynced.single.body, 'Đến giờ: Cho mèo ăn');
     expect(made.schedule.type, ScheduleType.weekly);
     expect(find.text('Của tôi'), findsOneWidget);
     expect(find.text('Cho mèo ăn'), findsOneWidget);
@@ -108,6 +116,7 @@ void main() {
       groups: controller.groups,
       store: store,
       notifier: NoopReminderNotifier(),
+      texts: AppTexts(const Locale('vi')),
       clock: () => now,
     );
     expect(restarted.reminders.single.id, group.templates.first.id);
@@ -119,7 +128,6 @@ void main() {
       id: 'custom-huge',
       title: 'Quá nhiều',
       icon: Reminder.customIcon,
-      message: '',
       color: Reminder.customColor,
       schedule: Schedule.weekly(
         [for (var h = 8; h < 17; h++) ClockTime(h, 0)],
@@ -129,5 +137,52 @@ void main() {
     final problem = await tester.runAsync(() => controller.saveReminder(huge));
     expect(problem, SaveProblem.tooManyNotifications);
     expect(controller.reminders, isEmpty);
+  });
+
+  testWidgets('the whole app follows the language', (tester) async {
+    final controller = await boot(tester, language: 'en');
+    expect(find.text('No reminders yet'), findsOneWidget);
+    expect(find.text('Monday, November 16'), findsOneWidget);
+
+    await tester.tap(find.text('Reminders'));
+    await tester.pumpAndSettle();
+    expect(find.text('Take medicine'), findsOneWidget);
+    expect(find.text('Every day · 08:00, 20:00'), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('reminder-uong-thuoc')));
+    await tester.pumpAndSettle();
+    expect(find.text('1 reminder on'), findsOneWidget);
+    expect(notifier.lastSynced.single.title, 'Take medicine');
+
+    // Switching the phone to Japanese rewrites the scheduled notifications,
+    // because a library reminder keeps no fixed name of its own.
+    await tester.runAsync(() => controller.setLocale(const Locale('ja')));
+    expect(notifier.lastSynced.single.title, '薬を飲む');
+    expect(controller.store.language, 'ja');
+  });
+
+  testWidgets('every language builds both screens without overflow', (tester) async {
+    for (final locale in AppTexts.supportedLocales) {
+      final controller = await boot(tester, language: locale.languageCode);
+      final group = controller.groups.first;
+      await tester.runAsync(() => controller.enableTemplate(group.templates.first, group));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull, reason: 'today, $locale');
+      await tester.tap(find.text(controller.texts.l10n.tabReminders).last);
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull, reason: 'library, $locale');
+      await tester.tap(find.text(controller.texts.l10n.createOwn));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(controller.texts.l10n.repeatMonthly));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull, reason: 'editor, $locale');
+    }
+  });
+
+  test('picks the phone language when translated, English otherwise', () {
+    expect(resolveLocale(const [Locale('ko', 'KR')]).languageCode, 'ko');
+    expect(resolveLocale(const [Locale('sv'), Locale('de', 'AT')]).languageCode, 'de');
+    expect(resolveLocale(const [Locale('sv')]).languageCode, 'en');
+    expect(resolveLocale(null).languageCode, 'en');
   });
 }

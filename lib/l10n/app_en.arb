@@ -1,0 +1,145 @@
+{
+  "@@locale": "en",
+  "tabToday": "Today",
+  "tabReminders": "Reminders",
+  "webPreviewNotice": "This is a web preview, so no notifications are sent. Notifications only work in the app on a phone.",
+  "notificationsOffNotice": "Notifications are turned off. Turn them on for this app in your phone's Settings to get reminders.",
+  "emptyNoRemindersTitle": "No reminders yet",
+  "emptyNoRemindersBody": "Pick a few ready-made reminders and switch them on. That is all.",
+  "emptyBrowseAction": "Browse ready-made reminders",
+  "emptyNothingTodayTitle": "Nothing for today",
+  "emptyNothingTodayBody": "Your reminders fall on other days.",
+  "ringDone": "done",
+  "ringSemantics": "{done} of {total} done today",
+  "@ringSemantics": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "summaryAllDoneTitle": "All done!",
+  "summaryAllDoneBody": "You did not forget anything today.",
+  "summaryOverdueTitle": "{count, plural, =1{1 overdue} other{{count} overdue}}",
+  "@summaryOverdueTitle": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "summaryOverdueBody": "Tap a circle to mark it as done.",
+  "summaryNextTitle": "Next at {time}",
+  "@summaryNextTitle": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "sectionTodo": "To do",
+  "sectionDone": "Done",
+  "itemOverdue": "{time} · overdue",
+  "@itemOverdue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "itemAt": "{title} at {time}",
+  "@itemAt": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "activeCount": "{count, plural, =1{1 reminder on} other{{count} reminders on}}",
+  "@activeCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "createOwn": "Create your own reminder",
+  "groupMine": "Mine",
+  "tooManyNotifications": "Too many reminder times. Switch one reminder off or use fewer times.",
+  "editNewTitle": "New reminder",
+  "editEditTitle": "Edit reminder",
+  "fieldTitleLabel": "Remind me to…",
+  "fieldTitleHint": "For example: Feed the cat",
+  "labelRepeat": "Repeat",
+  "repeatDaily": "Daily",
+  "repeatWeekly": "Weekly",
+  "repeatMonthly": "Monthly",
+  "labelOnDays": "On these days",
+  "labelOnDay": "On day",
+  "dayOfMonthOption": "Day {day} of every month",
+  "@dayOfMonthOption": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "dayOfMonthHelper": "Only up to day 28, because every month has it.",
+  "labelTimes": "Times",
+  "removeTime": "Remove {time}",
+  "@removeTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "addTime": "Add time",
+  "pickTimeHelp": "Pick a time",
+  "save": "Save",
+  "turnOffReminder": "Turn this reminder off",
+  "deleteReminder": "Delete this reminder",
+  "errorNoTitle": "Give the reminder a name.",
+  "errorNoTimes": "Add at least one time.",
+  "errorNoWeekdays": "Pick at least one day of the week.",
+  "scheduleEveryDay": "Every day",
+  "scheduleManyTimes": "{count} times ({first}–{last})",
+  "@scheduleManyTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "customMessage": "It's time: {title}",
+  "@customMessage": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifChannelName": "Reminders",
+  "notifChannelDescription": "The reminders you switched on",
+  "actionDone": "Done",
+  "actionSnooze": "Remind me in {minutes} min",
+  "@actionSnooze": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  }
+}

@@ -1,14 +1,47 @@
 {
   "id": "nha-cua",
-  "title": "Nhà cửa",
+  "title": {
+    "en": "Home",
+    "vi": "Nhà cửa",
+    "zh": "家务",
+    "es": "Hogar",
+    "pt": "Casa",
+    "fr": "Maison",
+    "de": "Haushalt",
+    "ja": "家のこと",
+    "ko": "집안일",
+    "id": "Rumah"
+  },
   "icon": "home",
   "color": "#C77B1F",
   "templates": [
     {
       "id": "do-rac",
-      "title": "Đổ rác",
+      "title": {
+        "en": "Take out the trash",
+        "vi": "Đổ rác",
+        "zh": "倒垃圾",
+        "es": "Sacar la basura",
+        "pt": "Tirar o lixo",
+        "fr": "Sortir les poubelles",
+        "de": "Müll rausbringen",
+        "ja": "ゴミを出す",
+        "ko": "쓰레기 버리기",
+        "id": "Buang sampah"
+      },
       "icon": "delete",
-      "message": "Mang rác ra ngoài trước khi quên.",
+      "message": {
+        "en": "Take the trash out before you forget.",
+        "vi": "Mang rác ra ngoài trước khi quên.",
+        "zh": "趁还没忘，把垃圾拿出去。",
+        "es": "Saca la basura antes de que se te olvide.",
+        "pt": "Leve o lixo para fora antes que esqueça.",
+        "fr": "Sortez les poubelles avant d'oublier.",
+        "de": "Bring den Müll raus, bevor du es vergisst.",
+        "ja": "忘れる前にゴミを出しましょう。",
+        "ko": "잊기 전에 쓰레기를 내놓으세요.",
+        "id": "Buang sampah sebelum lupa."
+      },
       "schedule": {
         "type": "daily",
         "times": [
@@ -18,9 +51,31 @@
     },
     {
       "id": "tuoi-cay",
-      "title": "Tưới cây",
+      "title": {
+        "en": "Water the plants",
+        "vi": "Tưới cây",
+        "zh": "浇花",
+        "es": "Regar las plantas",
+        "pt": "Regar as plantas",
+        "fr": "Arroser les plantes",
+        "de": "Pflanzen gießen",
+        "ja": "植物に水やり",
+        "ko": "화분에 물 주기",
+        "id": "Siram tanaman"
+      },
       "icon": "local_florist",
-      "message": "Cây đang chờ được tưới.",
+      "message": {
+        "en": "Your plants are waiting for water.",
+        "vi": "Cây đang chờ được tưới.",
+        "zh": "植物在等着浇水。",
+        "es": "Tus plantas esperan agua.",
+        "pt": "Suas plantas estão esperando água.",
+        "fr": "Vos plantes attendent d'être arrosées.",
+        "de": "Deine Pflanzen warten auf Wasser.",
+        "ja": "植物が水を待っています。",
+        "ko": "화분이 물을 기다리고 있어요.",
+        "id": "Tanaman Anda menunggu disiram."
+      },
       "schedule": {
         "type": "weekly",
         "times": [
@@ -35,9 +90,31 @@
     },
     {
       "id": "giat-ga",
-      "title": "Giặt ga giường",
+      "title": {
+        "en": "Wash the bed sheets",
+        "vi": "Giặt ga giường",
+        "zh": "洗床单",
+        "es": "Lavar las sábanas",
+        "pt": "Lavar os lençóis",
+        "fr": "Laver les draps",
+        "de": "Bettwäsche waschen",
+        "ja": "シーツを洗う",
+        "ko": "침대 시트 빨기",
+        "id": "Cuci seprai"
+      },
       "icon": "bed",
-      "message": "Thay và giặt ga giường tuần này.",
+      "message": {
+        "en": "Change and wash the bed sheets this week.",
+        "vi": "Thay và giặt ga giường tuần này.",
+        "zh": "这周换洗床单。",
+        "es": "Cambia y lava las sábanas esta semana.",
+        "pt": "Troque e lave os lençóis esta semana.",
+        "fr": "Changez et lavez les draps cette semaine.",
+        "de": "Diese Woche Bettwäsche wechseln und waschen.",
+        "ja": "今週はシーツを替えて洗いましょう。",
+        "ko": "이번 주에 침대 시트를 갈고 빨아 주세요.",
+        "id": "Ganti dan cuci seprai minggu ini."
+      },
       "schedule": {
         "type": "weekly",
         "times": [
@@ -50,9 +127,31 @@
     },
     {
       "id": "loi-loc-nuoc",
-      "title": "Kiểm tra lõi lọc nước",
+      "title": {
+        "en": "Check the water filter",
+        "vi": "Kiểm tra lõi lọc nước",
+        "zh": "检查净水器滤芯",
+        "es": "Revisar el filtro de agua",
+        "pt": "Verificar o filtro de água",
+        "fr": "Vérifier le filtre à eau",
+        "de": "Wasserfilter prüfen",
+        "ja": "浄水フィルターを確認",
+        "ko": "정수기 필터 확인",
+        "id": "Periksa filter air"
+      },
       "icon": "filter_alt",
-      "message": "Xem lõi lọc nước đã đến hạn thay chưa.",
+      "message": {
+        "en": "See whether the water filter is due for a change.",
+        "vi": "Xem lõi lọc nước đã đến hạn thay chưa.",
+        "zh": "看看滤芯是否该更换了。",
+        "es": "Mira si ya toca cambiar el filtro de agua.",
+        "pt": "Veja se já é hora de trocar o filtro de água.",
+        "fr": "Voyez s'il est temps de changer le filtre à eau.",
+        "de": "Sieh nach, ob der Wasserfilter gewechselt werden muss.",
+        "ja": "フィルターの交換時期か確認しましょう。",
+        "ko": "필터 교체 시기인지 확인하세요.",
+        "id": "Lihat apakah filter air sudah waktunya diganti."
+      },
       "schedule": {
         "type": "monthly",
         "times": [
@@ -63,9 +162,31 @@
     },
     {
       "id": "ve-sinh-may-giat",
-      "title": "Vệ sinh máy giặt",
+      "title": {
+        "en": "Clean the washing machine",
+        "vi": "Vệ sinh máy giặt",
+        "zh": "清洁洗衣机",
+        "es": "Limpiar la lavadora",
+        "pt": "Limpar a máquina de lavar",
+        "fr": "Nettoyer le lave-linge",
+        "de": "Waschmaschine reinigen",
+        "ja": "洗濯機を掃除",
+        "ko": "세탁기 청소",
+        "id": "Bersihkan mesin cuci"
+      },
       "icon": "local_laundry_service",
-      "message": "Chạy chế độ vệ sinh lồng giặt.",
+      "message": {
+        "en": "Run the drum-cleaning cycle.",
+        "vi": "Chạy chế độ vệ sinh lồng giặt.",
+        "zh": "运行一次筒自洁程序。",
+        "es": "Pon el programa de limpieza del tambor.",
+        "pt": "Rode o ciclo de limpeza do tambor.",
+        "fr": "Lancez le programme de nettoyage du tambour.",
+        "de": "Starte das Trommelreinigungsprogramm.",
+        "ja": "槽洗浄コースを回しましょう。",
+        "ko": "통세척 코스를 돌리세요.",
+        "id": "Jalankan mode pembersihan tabung."
+      },
       "schedule": {
         "type": "monthly",
         "times": [

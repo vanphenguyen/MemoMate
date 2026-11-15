@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -60,6 +63,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Tạo code dịch từ các file lib/l10n/app_*.arb mỗi khi chạy `flutter pub get`.
+  generate: true
 
   # Mỗi nhóm lời nhắc có sẵn là một file JSON trong thư mục này (xem docs/THIET_KE.md).
   assets:

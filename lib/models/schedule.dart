@@ -40,6 +40,9 @@ class ClockTime implements Comparable<ClockTime> {
 
 enum ScheduleType { daily, weekly, monthly }
 
+/// What makes a schedule unusable. Screens turn this into a sentence.
+enum ScheduleProblem { noTimes, noWeekdays, badWeekday, badDayOfMonth }
+
 /// When a reminder repeats.
 ///
 /// Every type has one or more [times]. A weekly schedule also has
@@ -73,7 +76,7 @@ class Schedule {
       json['day'] as int? ?? 1,
     );
     final problem = schedule.validate();
-    if (problem != null) throw FormatException(problem);
+    if (problem != null) throw FormatException('Lịch không hợp lệ: ${problem.name}');
     return schedule;
   }
 
@@ -86,15 +89,15 @@ class Schedule {
   final int dayOfMonth;
 
   /// Returns what is wrong with this schedule, or null when it is usable.
-  String? validate() {
-    if (times.isEmpty) return 'Cần ít nhất một giờ nhắc.';
+  ScheduleProblem? validate() {
+    if (times.isEmpty) return ScheduleProblem.noTimes;
     if (type == ScheduleType.weekly) {
-      if (weekdays.isEmpty) return 'Cần chọn ít nhất một ngày trong tuần.';
-      if (weekdays.any((d) => d < 1 || d > 7)) return 'Ngày trong tuần phải từ 1 đến 7.';
+      if (weekdays.isEmpty) return ScheduleProblem.noWeekdays;
+      if (weekdays.any((d) => d < 1 || d > 7)) return ScheduleProblem.badWeekday;
     }
     if (type == ScheduleType.monthly &&
         (dayOfMonth < 1 || dayOfMonth > maxDayOfMonth)) {
-      return 'Ngày trong tháng phải từ 1 đến $maxDayOfMonth.';
+      return ScheduleProblem.badDayOfMonth;
     }
     return null;
   }
@@ -123,25 +126,6 @@ class Schedule {
       day = DateTime(day.year, day.month, day.day + 1);
     }
     throw StateError('Lịch không có lần nhắc nào: ${toJson()}');
-  }
-
-  static const _weekdayNames = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
-
-  static String weekdayName(int weekday) => _weekdayNames[weekday - 1];
-
-  /// A short Vietnamese description, e.g. "Mỗi ngày · 8 lần (08:00–19:00)".
-  String describe() {
-    final String when = switch (type) {
-      ScheduleType.daily => 'Mỗi ngày',
-      ScheduleType.weekly => weekdays.length == 7
-          ? 'Mỗi ngày'
-          : (weekdays.toList()..sort()).map(weekdayName).join(', '),
-      ScheduleType.monthly => 'Ngày $dayOfMonth hằng tháng',
-    };
-    if (times.length > 3) {
-      return '$when · ${times.length} lần (${times.first.label}–${times.last.label})';
-    }
-    return '$when · ${times.map((t) => t.label).join(', ')}';
   }
 
   Map<String, dynamic> toJson() => {

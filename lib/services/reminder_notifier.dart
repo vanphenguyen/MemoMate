@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -7,36 +8,69 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../l10n/app_localizations.dart';
 import '../logic/today.dart';
 import '../models/reminder.dart';
 import '../models/schedule.dart';
+import '../texts.dart';
 import 'reminder_store.dart';
+
+/// The few words a notification needs besides the reminder itself.
+class NotificationLabels {
+  const NotificationLabels({
+    required this.channelName,
+    required this.channelDescription,
+    required this.done,
+    required this.snooze,
+  });
+
+  factory NotificationLabels.of(AppLocalizations l10n) => NotificationLabels(
+        channelName: l10n.notifChannelName,
+        channelDescription: l10n.notifChannelDescription,
+        done: l10n.actionDone,
+        snooze: l10n.actionSnooze(snoozeMinutes),
+      );
+
+  final String channelName;
+  final String channelDescription;
+  final String done;
+  final String snooze;
+}
+
+/// A reminder together with the words its notification shows.
+class PlannedReminder {
+  const PlannedReminder({required this.reminder, required this.title, required this.body});
+
+  final Reminder reminder;
+  final String title;
+  final String body;
+}
 
 /// Puts reminders on the phone's notification schedule.
 abstract class ReminderNotifier {
   /// False where scheduled notifications do not exist (the web preview).
   bool get supported;
 
-  Future<void> init();
+  Future<void> init(NotificationLabels labels);
 
   /// Asks the user to allow notifications. Returns whether they are allowed.
   Future<bool> requestPermission();
 
   /// Replaces everything scheduled with one repeating notification per
   /// time slot of [reminders].
-  Future<void> sync(List<Reminder> reminders);
+  Future<void> sync(List<PlannedReminder> reminders, NotificationLabels labels);
 }
 
 /// Used on the web and in tests: remembers what was asked, shows nothing.
 class NoopReminderNotifier implements ReminderNotifier {
-  List<Reminder> lastSynced = const [];
+  List<PlannedReminder> lastSynced = const [];
   int permissionRequests = 0;
 
   @override
   bool get supported => false;
 
   @override
-  Future<void> init() async {}
+  Future<void> init(NotificationLabels labels) async {}
 
   @override
   Future<bool> requestPermission() async {
@@ -45,32 +79,54 @@ class NoopReminderNotifier implements ReminderNotifier {
   }
 
   @override
-  Future<void> sync(List<Reminder> reminders) async => lastSynced = List.of(reminders);
+  Future<void> sync(List<PlannedReminder> reminders, NotificationLabels labels) async =>
+      lastSynced = List.of(reminders);
 }
 
 const _channelId = 'reminders';
 const _categoryId = 'reminder';
 const _actionDone = 'done';
 const _actionSnooze = 'snooze';
-const _snoozeMinutes = 15;
+const snoozeMinutes = 15;
 
 /// Snoozed notifications use ids from here up, clear of the repeating ones.
 const _snoozeIdBase = 1 << 20;
 
-const _details = NotificationDetails(
-  android: AndroidNotificationDetails(
-    _channelId,
-    'Lời nhắc',
-    channelDescription: 'Các lời nhắc bạn đã bật trong Nhớ Nhé',
-    importance: Importance.high,
-    priority: Priority.high,
-    actions: [
-      AndroidNotificationAction(_actionDone, 'Xong'),
-      AndroidNotificationAction(_actionSnooze, 'Nhắc lại sau $_snoozeMinutes phút'),
-    ],
-  ),
-  iOS: DarwinNotificationDetails(categoryIdentifier: _categoryId),
-);
+NotificationDetails _details(NotificationLabels labels) => NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channelId,
+        labels.channelName,
+        channelDescription: labels.channelDescription,
+        importance: Importance.high,
+        priority: Priority.high,
+        actions: [
+          AndroidNotificationAction(_actionDone, labels.done),
+          AndroidNotificationAction(_actionSnooze, labels.snooze),
+        ],
+      ),
+      iOS: const DarwinNotificationDetails(categoryIdentifier: _categoryId),
+    );
+
+/// What travels with a notification: which occurrence it is, plus its words
+/// so "remind me later" can show it again without looking anything up.
+String encodePayload(String occurrence, String title, String body) =>
+    jsonEncode({'k': occurrence, 't': title, 'b': body});
+
+({String occurrence, String title, String body})? decodePayload(String? payload) {
+  if (payload == null) return null;
+  try {
+    final json = jsonDecode(payload) as Map<String, dynamic>;
+    final occurrence = json['k'] as String;
+    if (parseOccurrenceKey(occurrence) == null) return null;
+    return (
+      occurrence: occurrence,
+      title: json['t'] as String? ?? '',
+      body: json['b'] as String? ?? '',
+    );
+  } on Object {
+    return null;
+  }
+}
 
 final _plugin = FlutterLocalNotificationsPlugin();
 
@@ -84,7 +140,11 @@ Future<void> _initTimeZone() async {
   }
 }
 
-Future<void> _initPlugin({required bool withBackgroundHandler}) => _plugin.initialize(
+Future<void> _initPlugin(
+  NotificationLabels labels, {
+  required bool withBackgroundHandler,
+}) =>
+    _plugin.initialize(
       settings: InitializationSettings(
         android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
         iOS: DarwinInitializationSettings(
@@ -96,11 +156,8 @@ Future<void> _initPlugin({required bool withBackgroundHandler}) => _plugin.initi
             DarwinNotificationCategory(
               _categoryId,
               actions: [
-                DarwinNotificationAction.plain(_actionDone, 'Xong'),
-                DarwinNotificationAction.plain(
-                  _actionSnooze,
-                  'Nhắc lại sau $_snoozeMinutes phút',
-                ),
+                DarwinNotificationAction.plain(_actionDone, labels.done),
+                DarwinNotificationAction.plain(_actionSnooze, labels.snooze),
               ],
             ),
           ],
@@ -111,6 +168,13 @@ Future<void> _initPlugin({required bool withBackgroundHandler}) => _plugin.initi
           withBackgroundHandler ? onBackgroundNotificationResponse : null,
     );
 
+/// The labels in the language the app was last shown in.
+Future<NotificationLabels> _savedLabels() async {
+  final language =
+      (await ReminderStore.load()).language ?? LocalizedText.fallbackLanguage;
+  return NotificationLabels.of(AppTexts(Locale(language)).l10n);
+}
+
 /// Runs when a notification button is pressed while the app is closed.
 /// It lives in its own isolate, so everything it needs is set up here.
 @pragma('vm:entry-point')
@@ -119,34 +183,29 @@ Future<void> onBackgroundNotificationResponse(NotificationResponse response) asy
   DartPluginRegistrant.ensureInitialized();
   if (response.actionId == _actionSnooze) {
     await _initTimeZone();
-    await _initPlugin(withBackgroundHandler: false);
+    await _initPlugin(await _savedLabels(), withBackgroundHandler: false);
   }
   await _handleResponse(response);
 }
 
 Future<void> _handleResponse(NotificationResponse response) async {
-  final occurrence = parseOccurrenceKey(response.payload);
-  if (occurrence == null) return;
+  final payload = decodePayload(response.payload);
+  if (payload == null) return;
   switch (response.actionId) {
     case _actionDone:
       final store = await ReminderStore.load();
       await store.reload();
-      await store.setDone(DateTime.now(), response.payload!, true);
+      await store.setDone(DateTime.now(), payload.occurrence, true);
       LocalReminderNotifier.onTicked?.call();
     case _actionSnooze:
-      final reminder = (await ReminderStore.load())
-          .reminders()
-          .where((r) => r.id == occurrence.reminderId)
-          .firstOrNull;
-      if (reminder == null) return;
       await _plugin.zonedSchedule(
         id: _snoozeIdBase + (response.id ?? 0),
-        title: reminder.title,
-        body: reminder.message,
+        title: payload.title,
+        body: payload.body,
         payload: response.payload,
         scheduledDate:
-            tz.TZDateTime.now(tz.local).add(const Duration(minutes: _snoozeMinutes)),
-        notificationDetails: _details,
+            tz.TZDateTime.now(tz.local).add(const Duration(minutes: snoozeMinutes)),
+        notificationDetails: _details(await _savedLabels()),
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
       );
   }
@@ -161,9 +220,9 @@ class LocalReminderNotifier implements ReminderNotifier {
   bool get supported => true;
 
   @override
-  Future<void> init() async {
+  Future<void> init(NotificationLabels labels) async {
     await _initTimeZone();
-    await _initPlugin(withBackgroundHandler: true);
+    await _initPlugin(labels, withBackgroundHandler: true);
   }
 
   @override
@@ -179,11 +238,13 @@ class LocalReminderNotifier implements ReminderNotifier {
   }
 
   @override
-  Future<void> sync(List<Reminder> reminders) async {
+  Future<void> sync(List<PlannedReminder> reminders, NotificationLabels labels) async {
     await _plugin.cancelAllPendingNotifications();
     final now = DateTime.now();
+    final details = _details(labels);
     var id = 0;
-    for (final reminder in reminders) {
+    for (final planned in reminders) {
+      final reminder = planned.reminder;
       final schedule = reminder.schedule;
       // A weekly reminder needs one repeating notification per weekday.
       final days = schedule.type == ScheduleType.weekly
@@ -194,11 +255,15 @@ class LocalReminderNotifier implements ReminderNotifier {
           final first = _firstOccurrence(schedule, weekday, time, now);
           await _plugin.zonedSchedule(
             id: id++,
-            title: reminder.title,
-            body: reminder.message,
-            payload: occurrenceKey(reminder.id, time),
+            title: planned.title,
+            body: planned.body,
+            payload: encodePayload(
+              occurrenceKey(reminder.id, time),
+              planned.title,
+              planned.body,
+            ),
             scheduledDate: tz.TZDateTime.from(first, tz.local),
-            notificationDetails: _details,
+            notificationDetails: details,
             // Inexact timing needs no special permission; reminders may
             // arrive a few minutes late when the phone is saving battery.
             androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

@@ -1,14 +1,47 @@
 {
   "id": "ra-khoi-nha",
-  "title": "Ra khỏi nhà",
+  "title": {
+    "en": "Leaving home",
+    "vi": "Ra khỏi nhà",
+    "zh": "出门",
+    "es": "Al salir de casa",
+    "pt": "Ao sair de casa",
+    "fr": "En partant",
+    "de": "Unterwegs",
+    "ja": "お出かけ",
+    "ko": "외출",
+    "id": "Keluar rumah"
+  },
   "icon": "door_front",
   "color": "#6B56C9",
   "templates": [
     {
       "id": "truoc-khi-di-lam",
-      "title": "Kiểm tra trước khi đi làm",
+      "title": {
+        "en": "Check before leaving for work",
+        "vi": "Kiểm tra trước khi đi làm",
+        "zh": "上班出门前检查",
+        "es": "Revisar antes de ir al trabajo",
+        "pt": "Conferir antes de sair para o trabalho",
+        "fr": "Vérifier avant de partir au travail",
+        "de": "Check vor dem Weg zur Arbeit",
+        "ja": "出勤前のチェック",
+        "ko": "출근 전 확인",
+        "id": "Cek sebelum berangkat kerja"
+      },
       "icon": "key",
-      "message": "Chìa khóa, ví, điện thoại. Đã khóa gas và tắt bếp chưa?",
+      "message": {
+        "en": "Keys, wallet, phone. Is the stove off and the gas closed?",
+        "vi": "Chìa khóa, ví, điện thoại. Đã khóa gas và tắt bếp chưa?",
+        "zh": "钥匙、钱包、手机。煤气和炉灶关了吗？",
+        "es": "Llaves, cartera, teléfono. ¿Apagaste la cocina y cerraste el gas?",
+        "pt": "Chaves, carteira, celular. Desligou o fogão e fechou o gás?",
+        "fr": "Clés, portefeuille, téléphone. La cuisinière et le gaz sont-ils éteints ?",
+        "de": "Schlüssel, Geldbeutel, Handy. Herd aus und Gas zu?",
+        "ja": "鍵、財布、スマホ。コンロとガスは止めましたか？",
+        "ko": "열쇠, 지갑, 휴대폰. 가스레인지와 가스 밸브는 잠갔나요?",
+        "id": "Kunci, dompet, ponsel. Kompor dan gas sudah dimatikan?"
+      },
       "schedule": {
         "type": "weekly",
         "times": [
@@ -25,9 +58,31 @@
     },
     {
       "id": "sac-dien-thoai",
-      "title": "Sạc điện thoại",
+      "title": {
+        "en": "Charge your phone",
+        "vi": "Sạc điện thoại",
+        "zh": "给手机充电",
+        "es": "Cargar el teléfono",
+        "pt": "Carregar o celular",
+        "fr": "Charger le téléphone",
+        "de": "Handy aufladen",
+        "ja": "スマホを充電する",
+        "ko": "휴대폰 충전하기",
+        "id": "Cas ponsel"
+      },
       "icon": "battery_charging_full",
-      "message": "Cắm sạc điện thoại cho ngày mai.",
+      "message": {
+        "en": "Plug your phone in for tomorrow.",
+        "vi": "Cắm sạc điện thoại cho ngày mai.",
+        "zh": "给手机充电，为明天做准备。",
+        "es": "Pon el teléfono a cargar para mañana.",
+        "pt": "Coloque o celular para carregar para amanhã.",
+        "fr": "Branchez votre téléphone pour demain.",
+        "de": "Häng dein Handy für morgen ans Ladegerät.",
+        "ja": "明日のためにスマホを充電しましょう。",
+        "ko": "내일을 위해 휴대폰을 충전하세요.",
+        "id": "Cas ponsel untuk besok."
+      },
       "schedule": {
         "type": "daily",
         "times": [

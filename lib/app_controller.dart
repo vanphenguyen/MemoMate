@@ -1,9 +1,10 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 import 'logic/today.dart';
 import 'models/reminder.dart';
 import 'services/reminder_notifier.dart';
 import 'services/reminder_store.dart';
+import 'texts.dart';
 
 /// Why a reminder could not be switched on or saved.
 enum SaveProblem { tooManyNotifications }
@@ -15,9 +16,16 @@ class AppController extends ChangeNotifier {
     required this.groups,
     required this.store,
     required this.notifier,
+    required AppTexts texts,
     DateTime Function()? clock,
-  }) : _clock = clock ?? DateTime.now {
+  })  : _clock = clock ?? DateTime.now,
+        // ignore: prefer_initializing_formals
+        _texts = texts {
     _reminders = store.reminders();
+    _templates = {
+      for (final group in groups)
+        for (final template in group.templates) template.id: template,
+    };
   }
 
   final List<TemplateGroup> groups;
@@ -26,6 +34,27 @@ class AppController extends ChangeNotifier {
   final DateTime Function() _clock;
 
   late List<Reminder> _reminders;
+  late final Map<String, ReminderTemplate> _templates;
+  AppTexts _texts;
+
+  /// Everything the app says, in the current language.
+  AppTexts get texts => _texts;
+
+  /// Switches language. Notifications are rewritten in the new language.
+  Future<void> setLocale(Locale locale) async {
+    if (locale == _texts.locale) return;
+    // No notifyListeners: this is called while the app is being built, and
+    // every screen below reads the new texts in that same build.
+    _texts = AppTexts(locale);
+    await store.saveLanguage(_texts.language);
+    await _syncNotifications();
+  }
+
+  String titleOf(Reminder reminder) =>
+      _texts.reminderTitle(reminder, _templates[reminder.templateId]);
+
+  String messageOf(Reminder reminder) =>
+      _texts.reminderMessage(reminder, _templates[reminder.templateId]);
 
   /// False after the user refused notifications; the app then says so.
   bool notificationsAllowed = true;
@@ -54,7 +83,8 @@ class AppController extends ChangeNotifier {
   /// (they are lost if the app's data was restored or the OS dropped them).
   Future<void> start() async {
     await store.pruneOld(now);
-    if (_reminders.isNotEmpty) await notifier.sync(_reminders);
+    await store.saveLanguage(_texts.language);
+    if (_reminders.isNotEmpty) await _syncNotifications();
   }
 
   /// Re-reads ticks made from notification buttons while the app was away.
@@ -102,6 +132,14 @@ class AppController extends ChangeNotifier {
   Future<void> _persist() async {
     await store.saveReminders(_reminders);
     notifyListeners();
-    await notifier.sync(_reminders);
+    await _syncNotifications();
   }
+
+  Future<void> _syncNotifications() => notifier.sync(
+        [
+          for (final r in _reminders)
+            PlannedReminder(reminder: r, title: titleOf(r), body: messageOf(r)),
+        ],
+        NotificationLabels.of(_texts.l10n),
+      );
 }

@@ -4,10 +4,21 @@ import 'package:flutter/material.dart';
 
 /// The big "3 / 8" ring at the top of the Today screen.
 class ProgressRing extends StatelessWidget {
-  const ProgressRing({super.key, required this.done, required this.total, this.size = 132});
+  const ProgressRing({
+    super.key,
+    required this.done,
+    required this.total,
+    required this.doneLabel,
+    required this.semanticsLabel,
+    this.size = 132,
+  });
 
   final int done;
   final int total;
+
+  /// The small word under the numbers, e.g. "done".
+  final String doneLabel;
+  final String semanticsLabel;
   final double size;
 
   @override
@@ -16,7 +27,7 @@ class ProgressRing extends StatelessWidget {
     final text = Theme.of(context).textTheme;
     final complete = total > 0 && done >= total;
     return Semantics(
-      label: 'Đã xong $done trên $total việc hôm nay',
+      label: semanticsLabel,
       child: SizedBox(
         width: size,
         height: size,
@@ -44,7 +55,7 @@ class ProgressRing extends StatelessWidget {
                           style: text.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          'đã xong',
+                          doneLabel,
                           style: text.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
                         ),
                       ],

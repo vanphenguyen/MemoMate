@@ -31,13 +31,25 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     super.initState();
     final reminder = widget.reminder;
     final schedule = reminder?.schedule;
-    _title = TextEditingController(text: reminder?.title ?? '');
+    _title = TextEditingController();
     _type = schedule?.type ?? ScheduleType.daily;
     _times = List.of(schedule?.times ?? const [ClockTime(9, 0)]);
     _weekdays = Set.of(
       schedule?.type == ScheduleType.weekly ? schedule!.weekdays : const {1, 2, 3, 4, 5},
     );
     _dayOfMonth = schedule?.type == ScheduleType.monthly ? schedule!.dayOfMonth : 1;
+  }
+
+  bool _filledTitle = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // The ready-made name depends on the language, so it is read here.
+    if (!_filledTitle && widget.reminder != null) {
+      _title.text = AppScope.of(context).titleOf(widget.reminder!);
+      _filledTitle = true;
+    }
   }
 
   @override
@@ -56,9 +68,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     final picked = await showTimePicker(
       context: context,
       initialTime: const TimeOfDay(hour: 12, minute: 0),
-      helpText: 'Chọn giờ nhắc',
-      cancelText: 'Hủy',
-      confirmText: 'Chọn',
+      helpText: AppScope.textsOf(context).l10n.pickTimeHelp,
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
         child: child!,
@@ -71,27 +81,32 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   }
 
   Future<void> _save() async {
+    final controller = AppScope.of(context);
+    final texts = controller.texts;
     final title = _title.text.trim();
     final schedule = _schedule;
-    final problem = title.isEmpty ? 'Hãy đặt tên cho lời nhắc.' : schedule.validate();
+    final scheduleProblem = schedule.validate();
+    final problem = title.isEmpty
+        ? texts.l10n.errorNoTitle
+        : scheduleProblem == null
+            ? null
+            : texts.scheduleProblem(scheduleProblem);
     if (problem != null) {
       setState(() => _error = problem);
       return;
     }
-    final controller = AppScope.of(context);
     final existing = widget.reminder;
+    // A library reminder whose name was left alone keeps following the
+    // phone's language instead of freezing in today's language.
+    final keepsReadyMadeName = existing != null &&
+        existing.title == null &&
+        title == controller.titleOf(existing);
     final reminder = existing != null
-        ? existing.copyWith(
-            title: title,
-            // A self-made reminder repeats its name as the notification text.
-            message: existing.isCustom ? 'Đến giờ: $title' : null,
-            schedule: schedule,
-          )
+        ? existing.edited(title: keepsReadyMadeName ? null : title, schedule: schedule)
         : Reminder(
             id: 'custom-${controller.now.microsecondsSinceEpoch}',
             title: title,
             icon: Reminder.customIcon,
-            message: 'Đến giờ: $title',
             color: Reminder.customColor,
             schedule: schedule,
             since: controller.now,
@@ -110,12 +125,14 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final texts = AppScope.textsOf(context);
+    final l10n = texts.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final isTemplate = widget.reminder != null && !widget.reminder!.isCustom;
 
     return Scaffold(
-      appBar: AppBar(title: Text(_isNew ? 'Lời nhắc mới' : 'Sửa lời nhắc')),
+      appBar: AppBar(title: Text(_isNew ? l10n.editNewTitle : l10n.editEditTitle)),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -126,20 +143,20 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               autofocus: _isNew,
               textCapitalization: TextCapitalization.sentences,
               maxLength: 40,
-              decoration: const InputDecoration(
-                labelText: 'Nhắc việc gì?',
-                hintText: 'Ví dụ: Cho mèo ăn',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText: l10n.fieldTitleLabel,
+                hintText: l10n.fieldTitleHint,
+                border: const OutlineInputBorder(),
               ),
               onChanged: (_) => setState(() => _error = null),
             ),
-            const _Label('Lặp lại'),
+            _Label(l10n.labelRepeat),
             SegmentedButton<ScheduleType>(
               showSelectedIcon: false,
-              segments: const [
-                ButtonSegment(value: ScheduleType.daily, label: Text('Mỗi ngày')),
-                ButtonSegment(value: ScheduleType.weekly, label: Text('Theo tuần')),
-                ButtonSegment(value: ScheduleType.monthly, label: Text('Theo tháng')),
+              segments: [
+                ButtonSegment(value: ScheduleType.daily, label: _SegmentLabel(l10n.repeatDaily)),
+                ButtonSegment(value: ScheduleType.weekly, label: _SegmentLabel(l10n.repeatWeekly)),
+                ButtonSegment(value: ScheduleType.monthly, label: _SegmentLabel(l10n.repeatMonthly)),
               ],
               selected: {_type},
               onSelectionChanged: (value) => setState(() {
@@ -148,14 +165,14 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               }),
             ),
             if (_type == ScheduleType.weekly) ...[
-              const _Label('Vào các ngày'),
+              _Label(l10n.labelOnDays),
               Wrap(
                 spacing: 6,
                 runSpacing: 6,
                 children: [
                   for (var day = 1; day <= 7; day++)
                     FilterChip(
-                      label: Text(Schedule.weekdayName(day)),
+                      label: Text(texts.weekdayName(day)),
                       showCheckmark: false,
                       selected: _weekdays.contains(day),
                       onSelected: (on) => setState(() {
@@ -167,21 +184,24 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               ),
             ],
             if (_type == ScheduleType.monthly) ...[
-              const _Label('Vào ngày'),
+              _Label(l10n.labelOnDay),
               DropdownButtonFormField<int>(
+                // Long translations get the full width instead of overflowing.
+                isExpanded: true,
                 initialValue: _dayOfMonth,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  helperText: 'Chỉ chọn được đến ngày 28 vì tháng nào cũng có.',
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  helperText: l10n.dayOfMonthHelper,
+                  helperMaxLines: 2,
                 ),
                 items: [
                   for (var day = 1; day <= Schedule.maxDayOfMonth; day++)
-                    DropdownMenuItem(value: day, child: Text('Ngày $day hằng tháng')),
+                    DropdownMenuItem(value: day, child: Text(l10n.dayOfMonthOption(day))),
                 ],
                 onChanged: (day) => setState(() => _dayOfMonth = day ?? _dayOfMonth),
               ),
             ],
-            const _Label('Giờ nhắc'),
+            _Label(l10n.labelTimes),
             Wrap(
               spacing: 6,
               runSpacing: 6,
@@ -189,7 +209,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 for (final time in _times)
                   InputChip(
                     label: Text(time.label),
-                    deleteButtonTooltipMessage: 'Bỏ giờ ${time.label}',
+                    deleteButtonTooltipMessage: l10n.removeTime(time.label),
                     onDeleted: () => setState(() {
                       _times = [..._times]..remove(time);
                       _error = null;
@@ -198,7 +218,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                 ActionChip(
                   key: const ValueKey('add-time'),
                   avatar: const Icon(Icons.add, size: 18),
-                  label: const Text('Thêm giờ'),
+                  label: Text(l10n.addTime),
                   onPressed: _addTime,
                 ),
               ],
@@ -212,7 +232,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               key: const ValueKey('save'),
               onPressed: _save,
               style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
-              child: const Text('Lưu'),
+              child: Text(l10n.save),
             ),
             if (!_isNew) ...[
               const SizedBox(height: 8),
@@ -222,7 +242,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
                   foregroundColor: scheme.error,
                   minimumSize: const Size.fromHeight(48),
                 ),
-                child: Text(isTemplate ? 'Tắt lời nhắc này' : 'Xóa lời nhắc này'),
+                child: Text(isTemplate ? l10n.turnOffReminder : l10n.deleteReminder),
               ),
             ],
           ],
@@ -230,6 +250,17 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
       ),
     );
   }
+}
+
+/// A segment's text, shrunk a little when a translation is too long to fit.
+class _SegmentLabel extends StatelessWidget {
+  const _SegmentLabel(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) =>
+      FittedBox(fit: BoxFit.scaleDown, child: Text(text, softWrap: false));
 }
 
 class _Label extends StatelessWidget {

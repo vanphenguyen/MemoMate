@@ -1,5 +1,28 @@
 import 'schedule.dart';
 
+/// A piece of text written in several languages, keyed by language code
+/// ("vi", "en", ...), as found in `assets/templates/*.json`.
+class LocalizedText {
+  const LocalizedText(this.byLanguage);
+
+  factory LocalizedText.fromJson(Object? json) {
+    if (json is! Map || json.isEmpty) {
+      throw const FormatException('Cần chữ cho từng ngôn ngữ, ví dụ {"vi": "...", "en": "..."}');
+    }
+    return LocalizedText({
+      for (final entry in json.entries) entry.key as String: entry.value as String,
+    });
+  }
+
+  /// Used when a language has no text of its own.
+  static const fallbackLanguage = 'en';
+
+  final Map<String, String> byLanguage;
+
+  String resolve(String language) =>
+      byLanguage[language] ?? byLanguage[fallbackLanguage] ?? byLanguage.values.first;
+}
+
 /// A ready-made reminder from `assets/templates/*.json`.
 class ReminderTemplate {
   const ReminderTemplate({
@@ -12,20 +35,20 @@ class ReminderTemplate {
 
   factory ReminderTemplate.fromJson(Map<String, dynamic> json) => ReminderTemplate(
         id: json['id'] as String,
-        title: json['title'] as String,
+        title: LocalizedText.fromJson(json['title']),
         icon: json['icon'] as String,
-        message: json['message'] as String,
+        message: LocalizedText.fromJson(json['message']),
         schedule: Schedule.fromJson(json['schedule'] as Map<String, dynamic>),
       );
 
   final String id;
-  final String title;
+  final LocalizedText title;
 
   /// Icon name, looked up in `lib/widgets/reminder_icons.dart`.
   final String icon;
 
   /// Text shown in the notification under the title.
-  final String message;
+  final LocalizedText message;
   final Schedule schedule;
 }
 
@@ -41,7 +64,7 @@ class TemplateGroup {
 
   factory TemplateGroup.fromJson(Map<String, dynamic> json) => TemplateGroup(
         id: json['id'] as String,
-        title: json['title'] as String,
+        title: LocalizedText.fromJson(json['title']),
         icon: json['icon'] as String,
         color: parseColor(json['color'] as String),
         templates: [
@@ -51,7 +74,7 @@ class TemplateGroup {
       );
 
   final String id;
-  final String title;
+  final LocalizedText title;
   final String icon;
 
   /// ARGB colour value.
@@ -71,11 +94,10 @@ class TemplateGroup {
 class Reminder {
   const Reminder({
     required this.id,
-    required this.title,
     required this.icon,
-    required this.message,
     required this.color,
     required this.schedule,
+    this.title,
     this.templateId,
     this.since,
   });
@@ -86,22 +108,19 @@ class Reminder {
     DateTime? since,
   }) =>
       Reminder(
-        since: since,
         id: template.id,
         templateId: template.id,
-        title: template.title,
         icon: template.icon,
-        message: template.message,
         color: group.color,
         schedule: template.schedule,
+        since: since,
       );
 
   factory Reminder.fromJson(Map<String, dynamic> json) => Reminder(
         id: json['id'] as String,
         templateId: json['templateId'] as String?,
-        title: json['title'] as String,
+        title: json['title'] as String?,
         icon: json['icon'] as String,
-        message: json['message'] as String? ?? '',
         color: json['color'] as int,
         schedule: Schedule.fromJson(json['schedule'] as Map<String, dynamic>),
         since: DateTime.tryParse(json['since'] as String? ?? ''),
@@ -114,9 +133,11 @@ class Reminder {
 
   /// Set when this reminder came from the library; null for self-made ones.
   final String? templateId;
-  final String title;
+
+  /// The name the user typed. Null for a library reminder that keeps its
+  /// ready-made name, which then follows the phone's language.
+  final String? title;
   final String icon;
-  final String message;
   final int color;
   final Schedule schedule;
 
@@ -126,23 +147,22 @@ class Reminder {
 
   bool get isCustom => templateId == null;
 
-  Reminder copyWith({String? title, String? message, Schedule? schedule}) => Reminder(
+  /// A copy with a new [schedule] and [title] (null keeps the ready-made name).
+  Reminder edited({required String? title, required Schedule schedule}) => Reminder(
         id: id,
         templateId: templateId,
-        title: title ?? this.title,
+        title: title,
         icon: icon,
-        message: message ?? this.message,
         color: color,
-        schedule: schedule ?? this.schedule,
+        schedule: schedule,
         since: since,
       );
 
   Map<String, dynamic> toJson() => {
         'id': id,
         if (templateId != null) 'templateId': templateId,
-        'title': title,
+        if (title != null) 'title': title,
         'icon': icon,
-        'message': message,
         'color': color,
         'schedule': schedule.toJson(),
         if (since != null) 'since': since!.toIso8601String(),

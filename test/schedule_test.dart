@@ -47,9 +47,9 @@ void main() {
     });
 
     test('validate explains what is missing', () {
-      expect(Schedule.daily(const []).validate(), isNotNull);
-      expect(Schedule.weekly(nine, {}).validate(), isNotNull);
-      expect(Schedule.monthly(nine, 31).validate(), isNotNull);
+      expect(Schedule.daily(const []).validate(), ScheduleProblem.noTimes);
+      expect(Schedule.weekly(nine, {}).validate(), ScheduleProblem.noWeekdays);
+      expect(Schedule.monthly(nine, 31).validate(), ScheduleProblem.badDayOfMonth);
       expect(Schedule.monthly(nine, 28).validate(), isNull);
     });
 
@@ -57,14 +57,6 @@ void main() {
       expect(Schedule.daily(const [ClockTime(8, 0), ClockTime(9, 0)]).notificationSlots, 2);
       expect(Schedule.weekly(nine, {1, 2, 3}).notificationSlots, 3);
       expect(Schedule.monthly(nine, 1).notificationSlots, 1);
-    });
-
-    test('describes itself in Vietnamese', () {
-      expect(Schedule.daily(nine).describe(), 'Mỗi ngày · 09:00');
-      expect(Schedule.weekly(nine, {7, 1}).describe(), 'T2, CN · 09:00');
-      expect(Schedule.monthly(nine, 5).describe(), 'Ngày 5 hằng tháng · 09:00');
-      final many = Schedule.daily([for (var h = 8; h < 12; h++) ClockTime(h, 0)]);
-      expect(many.describe(), 'Mỗi ngày · 4 lần (08:00–11:00)');
     });
 
     test('survives a JSON round trip', () {

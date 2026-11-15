@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../app.dart';
 import '../logic/today.dart';
-import '../models/schedule.dart';
 import '../widgets/progress_ring.dart';
 import '../widgets/reminder_icons.dart';
 
@@ -12,14 +11,11 @@ class TodayScreen extends StatelessWidget {
 
   final VoidCallback onOpenLibrary;
 
-  static String dateLabel(DateTime day) {
-    final weekday = day.weekday == DateTime.sunday ? 'Chủ nhật' : 'Thứ ${day.weekday + 1}';
-    return '$weekday, ${day.day} tháng ${day.month}';
-  }
-
   @override
   Widget build(BuildContext context) {
     final controller = AppScope.of(context);
+    final texts = AppScope.textsOf(context);
+    final l10n = texts.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final now = controller.now;
@@ -31,43 +27,38 @@ class TodayScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
       children: [
         Text(
-          dateLabel(now),
+          texts.dateLabel(now),
           style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
         ),
         const SizedBox(height: 2),
         Text(
-          'Hôm nay',
+          l10n.tabToday,
           style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 16),
         if (!controller.notifier.supported) ...[
-          const _Notice(
-            icon: Icons.info_outline,
-            text: 'Đây là bản xem thử trên web nên không gửi thông báo. '
-                'Thông báo chỉ hoạt động trong app trên điện thoại.',
-          ),
+          _Notice(icon: Icons.info_outline, text: l10n.webPreviewNotice),
           const SizedBox(height: 12),
         ] else if (!controller.notificationsAllowed) ...[
-          const _Notice(
+          _Notice(
             icon: Icons.notifications_off_outlined,
-            text: 'Thông báo đang bị tắt. Hãy bật thông báo cho Nhớ Nhé '
-                'trong phần Cài đặt của điện thoại để nhận lời nhắc.',
+            text: l10n.notificationsOffNotice,
           ),
           const SizedBox(height: 12),
         ],
         if (controller.reminders.isEmpty)
           _Empty(
             icon: Icons.notifications_active_outlined,
-            title: 'Chưa có lời nhắc nào',
-            body: 'Chọn vài lời nhắc có sẵn, bật lên là xong.',
-            actionLabel: 'Xem lời nhắc có sẵn',
+            title: l10n.emptyNoRemindersTitle,
+            body: l10n.emptyNoRemindersBody,
+            actionLabel: l10n.emptyBrowseAction,
             onAction: onOpenLibrary,
           )
         else if (items.isEmpty)
-          const _Empty(
+          _Empty(
             icon: Icons.wb_sunny_outlined,
-            title: 'Hôm nay không có việc gì',
-            body: 'Các lời nhắc của bạn rơi vào những ngày khác.',
+            title: l10n.emptyNothingTodayTitle,
+            body: l10n.emptyNothingTodayBody,
           )
         else ...[
           Card(
@@ -75,7 +66,12 @@ class TodayScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  ProgressRing(done: done.length, total: items.length),
+                  ProgressRing(
+                    done: done.length,
+                    total: items.length,
+                    doneLabel: l10n.ringDone,
+                    semanticsLabel: l10n.ringSemantics(done.length, items.length),
+                  ),
                   const SizedBox(width: 20),
                   Expanded(child: _Summary(pending: pending, now: now)),
                 ],
@@ -83,11 +79,11 @@ class TodayScreen extends StatelessWidget {
             ),
           ),
           if (pending.isNotEmpty) ...[
-            const _SectionTitle('Cần làm'),
+            _SectionTitle(l10n.sectionTodo),
             for (final item in pending) _ItemTile(item: item, now: now),
           ],
           if (done.isNotEmpty) ...[
-            const _SectionTitle('Đã xong'),
+            _SectionTitle(l10n.sectionDone),
             for (final item in done) _ItemTile(item: item, now: now),
           ],
         ],
@@ -104,6 +100,8 @@ class _Summary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = AppScope.of(context);
+    final l10n = AppScope.textsOf(context).l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final overdue = pending.where((i) => i.isOverdue(now)).length;
@@ -112,14 +110,14 @@ class _Summary extends StatelessWidget {
     final String title;
     final String body;
     if (pending.isEmpty) {
-      title = 'Xong hết rồi!';
-      body = 'Bạn không quên việc nào hôm nay.';
+      title = l10n.summaryAllDoneTitle;
+      body = l10n.summaryAllDoneBody;
     } else if (overdue > 0) {
-      title = '$overdue việc đã qua giờ';
-      body = 'Chạm vào ô tròn để đánh dấu đã làm.';
+      title = l10n.summaryOverdueTitle(overdue);
+      body = l10n.summaryOverdueBody;
     } else {
-      title = 'Tiếp theo lúc ${next!.time.label}';
-      body = next.reminder.title;
+      title = l10n.summaryNextTitle(next!.time.label);
+      body = controller.titleOf(next.reminder);
     }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,6 +159,9 @@ class _ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = AppScope.of(context);
+    final l10n = AppScope.textsOf(context).l10n;
+    final title = controller.titleOf(item.reminder);
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final overdue = item.isOverdue(now);
@@ -170,7 +171,7 @@ class _ItemTile extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           key: ValueKey('today-${item.key}'),
-          onTap: () => AppScope.of(context).toggleDone(item),
+          onTap: () => controller.toggleDone(item),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
             child: Row(
@@ -186,7 +187,7 @@ class _ItemTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item.reminder.title,
+                        title,
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: item.done ? scheme.onSurfaceVariant : null,
                           decoration: item.done ? TextDecoration.lineThrough : null,
@@ -194,7 +195,7 @@ class _ItemTile extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        overdue ? '${item.time.label} · đã qua giờ' : item.time.label,
+                        overdue ? l10n.itemOverdue(item.time.label) : item.time.label,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: overdue ? scheme.error : scheme.onSurfaceVariant,
                           fontWeight: overdue ? FontWeight.w600 : null,
@@ -205,7 +206,7 @@ class _ItemTile extends StatelessWidget {
                 ),
                 Semantics(
                   checked: item.done,
-                  label: _tickLabel(item.reminder.title, item.time),
+                  label: l10n.itemAt(title, item.time.label),
                   child: SizedBox(
                     width: 48,
                     height: 48,
@@ -223,8 +224,6 @@ class _ItemTile extends StatelessWidget {
       ),
     );
   }
-
-  static String _tickLabel(String title, ClockTime time) => '$title lúc ${time.label}';
 }
 
 class _Notice extends StatelessWidget {

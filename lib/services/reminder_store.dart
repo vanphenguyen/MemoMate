@@ -57,6 +57,12 @@ class ReminderStore {
 
   Future<void> markAskedPermission() => _prefs.setBool(_askedPermissionKey, true);
 
+  /// The app language last shown, for notification buttons pressed while
+  /// the app is closed.
+  String? get language => _prefs.getString('language');
+
+  Future<void> saveLanguage(String language) => _prefs.setString('language', language);
+
   /// Deletes ticks from more than [keepDays] days before [today].
   Future<void> pruneOld(DateTime today) async {
     final cutoff = dayKey(DateTime(today.year, today.month, today.day - keepDays));

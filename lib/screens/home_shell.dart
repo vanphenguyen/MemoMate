@@ -36,6 +36,7 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppScope.textsOf(context).l10n;
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -50,16 +51,16 @@ class _HomeShellState extends State<HomeShell> with WidgetsBindingObserver {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
         onDestinationSelected: (i) => setState(() => _tab = i),
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.today_outlined),
-            selectedIcon: Icon(Icons.today),
-            label: 'Hôm nay',
+            icon: const Icon(Icons.today_outlined),
+            selectedIcon: const Icon(Icons.today),
+            label: l10n.tabToday,
           ),
           NavigationDestination(
-            icon: Icon(Icons.notifications_none),
-            selectedIcon: Icon(Icons.notifications),
-            label: 'Lời nhắc',
+            icon: const Icon(Icons.notifications_none),
+            selectedIcon: const Icon(Icons.notifications),
+            label: l10n.tabReminders,
           ),
         ],
       ),

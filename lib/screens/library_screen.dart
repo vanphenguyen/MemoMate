@@ -3,15 +3,14 @@ import 'package:flutter/material.dart';
 import '../app.dart';
 import '../app_controller.dart';
 import '../models/reminder.dart';
-import '../models/schedule.dart';
 import '../widgets/reminder_icons.dart';
 import 'edit_reminder_screen.dart';
 
 /// Shown when the phone cannot hold any more scheduled notifications.
 void showSaveProblem(BuildContext context, SaveProblem problem) {
+  final l10n = AppScope.textsOf(context).l10n;
   final text = switch (problem) {
-    SaveProblem.tooManyNotifications =>
-      'Đã quá nhiều lần nhắc. Hãy tắt bớt một lời nhắc hoặc giảm số giờ nhắc.',
+    SaveProblem.tooManyNotifications => l10n.tooManyNotifications,
   };
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
@@ -30,6 +29,8 @@ class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = AppScope.of(context);
+    final texts = AppScope.textsOf(context);
+    final l10n = texts.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final custom = controller.customReminders;
@@ -38,24 +39,24 @@ class LibraryScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
       children: [
         Text(
-          '${controller.reminders.length} lời nhắc đang bật',
+          l10n.activeCount(controller.reminders.length),
           style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
         ),
         const SizedBox(height: 2),
         Text(
-          'Lời nhắc',
+          l10n.tabReminders,
           style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
         ),
         const SizedBox(height: 16),
         FilledButton.tonalIcon(
           onPressed: () => _openEditor(context),
           icon: const Icon(Icons.add),
-          label: const Text('Tự tạo lời nhắc'),
+          label: Text(l10n.createOwn),
           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52)),
         ),
         if (custom.isNotEmpty)
           _Group(
-            title: 'Của tôi',
+            title: l10n.groupMine,
             icon: Reminder.customIcon,
             color: Reminder.customColor,
             children: [
@@ -64,8 +65,8 @@ class LibraryScreen extends StatelessWidget {
                   rowKey: ValueKey('reminder-${reminder.id}'),
                   icon: reminder.icon,
                   color: reminder.color,
-                  title: reminder.title,
-                  schedule: reminder.schedule,
+                  title: controller.titleOf(reminder),
+                  schedule: texts.describeSchedule(reminder.schedule),
                   active: true,
                   onTap: () => _openEditor(context, reminder: reminder),
                   onChanged: (_) => controller.disable(reminder.id),
@@ -74,7 +75,7 @@ class LibraryScreen extends StatelessWidget {
           ),
         for (final group in controller.groups)
           _Group(
-            title: group.title,
+            title: group.title.resolve(texts.language),
             icon: group.icon,
             color: group.color,
             children: [
@@ -92,13 +93,14 @@ class LibraryScreen extends StatelessWidget {
     TemplateGroup group,
     ReminderTemplate template,
   ) {
+    final texts = controller.texts;
     final active = controller.reminderById(template.id);
     return _Row(
       rowKey: ValueKey('reminder-${template.id}'),
       icon: template.icon,
       color: group.color,
-      title: active?.title ?? template.title,
-      schedule: active?.schedule ?? template.schedule,
+      title: active != null ? controller.titleOf(active) : template.title.resolve(texts.language),
+      schedule: texts.describeSchedule(active?.schedule ?? template.schedule),
       active: active != null,
       onTap: active == null ? null : () => _openEditor(context, reminder: active),
       onChanged: (on) async {
@@ -179,7 +181,9 @@ class _Row extends StatelessWidget {
   final String icon;
   final int color;
   final String title;
-  final Schedule schedule;
+
+  /// The schedule already put into words.
+  final String schedule;
   final bool active;
 
   /// Opens the editor; null while the reminder is switched off.
@@ -212,7 +216,7 @@ class _Row extends StatelessWidget {
                       ],
                       Expanded(
                         child: Text(
-                          schedule.describe(),
+                          schedule,
                           style: theme.textTheme.bodySmall
                               ?.copyWith(color: scheme.onSurfaceVariant),
                         ),

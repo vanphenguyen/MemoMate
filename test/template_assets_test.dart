@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:nho_nhe/l10n/app_localizations.dart';
 import 'package:nho_nhe/logic/today.dart';
 import 'package:nho_nhe/models/reminder.dart';
 import 'package:nho_nhe/widgets/reminder_icons.dart';
@@ -45,9 +46,25 @@ void main() {
     for (final group in groups) {
       expect(reminderIcons, contains(group.icon), reason: group.id);
       for (final t in group.templates) {
-        expect(t.title.trim(), isNotEmpty, reason: t.id);
-        expect(t.message.trim(), isNotEmpty, reason: t.id);
         expect(reminderIcons, contains(t.icon), reason: '${t.id}: icon "${t.icon}"');
+      }
+    }
+  });
+
+  test('every name and message is written in every app language', () {
+    final languages = {for (final l in AppLocalizations.supportedLocales) l.languageCode};
+    void check(LocalizedText text, String where) {
+      expect(text.byLanguage.keys.toSet(), languages, reason: where);
+      for (final entry in text.byLanguage.entries) {
+        expect(entry.value.trim(), isNotEmpty, reason: '$where (${entry.key})');
+      }
+    }
+
+    for (final group in groups) {
+      check(group.title, 'group ${group.id}');
+      for (final t in group.templates) {
+        check(t.title, '${t.id} title');
+        check(t.message, '${t.id} message');
       }
     }
   });

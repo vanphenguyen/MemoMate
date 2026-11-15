@@ -7,7 +7,6 @@ Reminder reminder(String id, Schedule schedule) => Reminder(
       id: id,
       title: id,
       icon: 'notifications',
-      message: '',
       color: 0xFF000000,
       schedule: schedule,
     );
@@ -41,7 +40,6 @@ void main() {
       id: 'nuoc',
       title: 'nuoc',
       icon: 'notifications',
-      message: '',
       color: 0xFF000000,
       schedule: water.schedule,
       since: monday, // switched on at 10:00

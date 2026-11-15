@@ -13,7 +13,12 @@ Chọn lời nhắc có sẵn, gạt công tắc là chạy; bấm "Xong" ngay t
 - Tự tạo lời nhắc riêng, lặp theo ngày, tuần hoặc tháng.
 - Màn hình "Hôm nay" với vòng tiến độ.
 - Thông báo có nút "Xong" và "Nhắc lại sau 15 phút".
+- 10 ngôn ngữ, tự theo ngôn ngữ của điện thoại.
 - Không tài khoản, không cần mạng, dữ liệu chỉ nằm trên máy.
+
+| English | 日本語 | Deutsch |
+|---|---|---|
+| ![English](docs/anh/thu-vien-en.png) | ![日本語](docs/anh/hom-nay-ja.png) | ![Deutsch](docs/anh/thu-vien-de.png) |
 
 ## Chạy thử
 

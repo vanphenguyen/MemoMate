@@ -1,14 +1,47 @@
 {
   "id": "tien-bac",
-  "title": "Tiền bạc",
+  "title": {
+    "en": "Money",
+    "vi": "Tiền bạc",
+    "zh": "账单",
+    "es": "Dinero",
+    "pt": "Dinheiro",
+    "fr": "Argent",
+    "de": "Finanzen",
+    "ja": "お金",
+    "ko": "돈",
+    "id": "Keuangan"
+  },
   "icon": "payments",
   "color": "#3B6FD4",
   "templates": [
     {
       "id": "tien-nha",
-      "title": "Tiền nhà",
+      "title": {
+        "en": "Rent",
+        "vi": "Tiền nhà",
+        "zh": "房租",
+        "es": "Alquiler",
+        "pt": "Aluguel",
+        "fr": "Loyer",
+        "de": "Miete",
+        "ja": "家賃",
+        "ko": "월세",
+        "id": "Sewa rumah"
+      },
       "icon": "house",
-      "message": "Đến ngày chuyển tiền nhà.",
+      "message": {
+        "en": "Rent is due today.",
+        "vi": "Đến ngày chuyển tiền nhà.",
+        "zh": "今天该交房租了。",
+        "es": "Hoy toca pagar el alquiler.",
+        "pt": "Hoje é dia de pagar o aluguel.",
+        "fr": "C'est le jour du loyer.",
+        "de": "Heute ist die Miete fällig.",
+        "ja": "今日は家賃の支払日です。",
+        "ko": "오늘은 월세 내는 날이에요.",
+        "id": "Hari ini waktunya bayar sewa."
+      },
       "schedule": {
         "type": "monthly",
         "times": [
@@ -19,9 +52,31 @@
     },
     {
       "id": "tien-dien",
-      "title": "Tiền điện",
+      "title": {
+        "en": "Electricity bill",
+        "vi": "Tiền điện",
+        "zh": "电费",
+        "es": "Factura de la luz",
+        "pt": "Conta de luz",
+        "fr": "Facture d'électricité",
+        "de": "Stromrechnung",
+        "ja": "電気代",
+        "ko": "전기 요금",
+        "id": "Tagihan listrik"
+      },
       "icon": "bolt",
-      "message": "Kiểm tra và đóng tiền điện tháng này.",
+      "message": {
+        "en": "Check and pay this month's electricity bill.",
+        "vi": "Kiểm tra và đóng tiền điện tháng này.",
+        "zh": "查看并缴纳本月电费。",
+        "es": "Revisa y paga la factura de la luz de este mes.",
+        "pt": "Confira e pague a conta de luz deste mês.",
+        "fr": "Vérifiez et payez la facture d'électricité du mois.",
+        "de": "Stromrechnung für diesen Monat prüfen und bezahlen.",
+        "ja": "今月の電気代を確認して支払いましょう。",
+        "ko": "이번 달 전기 요금을 확인하고 납부하세요.",
+        "id": "Cek dan bayar tagihan listrik bulan ini."
+      },
       "schedule": {
         "type": "monthly",
         "times": [
@@ -32,9 +87,31 @@
     },
     {
       "id": "tien-nuoc",
-      "title": "Tiền nước",
+      "title": {
+        "en": "Water bill",
+        "vi": "Tiền nước",
+        "zh": "水费",
+        "es": "Factura del agua",
+        "pt": "Conta de água",
+        "fr": "Facture d'eau",
+        "de": "Wasserrechnung",
+        "ja": "水道代",
+        "ko": "수도 요금",
+        "id": "Tagihan air"
+      },
       "icon": "water",
-      "message": "Kiểm tra và đóng tiền nước tháng này.",
+      "message": {
+        "en": "Check and pay this month's water bill.",
+        "vi": "Kiểm tra và đóng tiền nước tháng này.",
+        "zh": "查看并缴纳本月水费。",
+        "es": "Revisa y paga la factura del agua de este mes.",
+        "pt": "Confira e pague a conta de água deste mês.",
+        "fr": "Vérifiez et payez la facture d'eau du mois.",
+        "de": "Wasserrechnung für diesen Monat prüfen und bezahlen.",
+        "ja": "今月の水道代を確認して支払いましょう。",
+        "ko": "이번 달 수도 요금을 확인하고 납부하세요.",
+        "id": "Cek dan bayar tagihan air bulan ini."
+      },
       "schedule": {
         "type": "monthly",
         "times": [
@@ -45,9 +122,31 @@
     },
     {
       "id": "tien-internet",
-      "title": "Tiền internet",
+      "title": {
+        "en": "Internet bill",
+        "vi": "Tiền internet",
+        "zh": "网费",
+        "es": "Factura de internet",
+        "pt": "Conta de internet",
+        "fr": "Facture internet",
+        "de": "Internetrechnung",
+        "ja": "インターネット料金",
+        "ko": "인터넷 요금",
+        "id": "Tagihan internet"
+      },
       "icon": "wifi",
-      "message": "Đóng cước internet tháng này.",
+      "message": {
+        "en": "Pay this month's internet bill.",
+        "vi": "Đóng cước internet tháng này.",
+        "zh": "缴纳本月网费。",
+        "es": "Paga la factura de internet de este mes.",
+        "pt": "Pague a conta de internet deste mês.",
+        "fr": "Payez la facture internet du mois.",
+        "de": "Internetrechnung für diesen Monat bezahlen.",
+        "ja": "今月のインターネット料金を支払いましょう。",
+        "ko": "이번 달 인터넷 요금을 납부하세요.",
+        "id": "Bayar tagihan internet bulan ini."
+      },
       "schedule": {
         "type": "monthly",
         "times": [
@@ -58,9 +157,31 @@
     },
     {
       "id": "the-tin-dung",
-      "title": "Trả thẻ tín dụng",
+      "title": {
+        "en": "Pay the credit card",
+        "vi": "Trả thẻ tín dụng",
+        "zh": "还信用卡",
+        "es": "Pagar la tarjeta de crédito",
+        "pt": "Pagar o cartão de crédito",
+        "fr": "Payer la carte de crédit",
+        "de": "Kreditkarte bezahlen",
+        "ja": "クレジットカードの支払い",
+        "ko": "신용카드 대금 납부",
+        "id": "Bayar kartu kredit"
+      },
       "icon": "credit_card",
-      "message": "Thanh toán dư nợ thẻ trước hạn.",
+      "message": {
+        "en": "Pay the card balance before the due date.",
+        "vi": "Thanh toán dư nợ thẻ trước hạn.",
+        "zh": "在到期日前还清信用卡账单。",
+        "es": "Paga el saldo de la tarjeta antes del vencimiento.",
+        "pt": "Pague a fatura do cartão antes do vencimento.",
+        "fr": "Réglez le solde de la carte avant l'échéance.",
+        "de": "Kartensaldo vor dem Fälligkeitstag begleichen.",
+        "ja": "期日までにカードの支払いを済ませましょう。",
+        "ko": "결제일 전에 카드 대금을 납부하세요.",
+        "id": "Lunasi tagihan kartu sebelum jatuh tempo."
+      },
       "schedule": {
         "type": "monthly",
         "times": [

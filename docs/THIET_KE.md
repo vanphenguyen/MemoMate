@@ -15,15 +15,15 @@ Mỗi nhóm là một file trong `assets/templates/`, ví dụ `suc-khoe.json`:
 ```json
 {
   "id": "suc-khoe",
-  "title": "Sức khỏe",
+  "title": { "vi": "Sức khỏe", "en": "Health", "ja": "健康" },
   "icon": "favorite",
   "color": "#2E9E6B",
   "templates": [
     {
       "id": "uong-thuoc",
-      "title": "Uống thuốc",
+      "title": { "vi": "Uống thuốc", "en": "Take medicine", "ja": "薬を飲む" },
       "icon": "medication",
-      "message": "Đến giờ uống thuốc rồi.",
+      "message": { "vi": "Đến giờ uống thuốc rồi.", "en": "Time to take your medicine.", "ja": "薬を飲む時間です。" },
       "schedule": { "type": "daily", "times": ["08:00", "20:00"] }
     }
   ]
@@ -32,7 +32,7 @@ Mỗi nhóm là một file trong `assets/templates/`, ví dụ `suc-khoe.json`:
 
 - `id` của nhóm phải trùng tên file; `id` của lời nhắc không được trùng nhau trong toàn bộ thư viện
   và **không đổi sau khi phát hành** (app dùng nó để nhớ lời nhắc nào đang bật).
-- `message` là dòng chữ hiện trong thông báo.
+- `title` và `message` phải có đủ 10 ngôn ngữ (ví dụ trên rút gọn còn 3). `message` là dòng chữ hiện trong thông báo.
 - `icon` phải có trong `lib/widgets/reminder_icons.dart`.
 - Thêm nhóm mới: tạo file JSON rồi thêm `id` vào `assets/templates/index.json`.
 
@@ -46,6 +46,18 @@ Ba kiểu lịch (`schedule`):
 
 Sau khi sửa, chạy `flutter test` để kiểm tra dữ liệu.
 
+## Ngôn ngữ
+
+App có 10 ngôn ngữ: Việt, Anh, Trung (giản thể), Tây Ban Nha, Bồ Đào Nha, Pháp, Đức, Nhật, Hàn, Indonesia.
+App tự theo ngôn ngữ của điện thoại; máy dùng ngôn ngữ khác thì hiện tiếng Anh. Chưa có nút đổi ngôn ngữ trong app.
+
+- Chữ giao diện: `lib/l10n/app_<mã>.arb`, mỗi ngôn ngữ một file. Sửa xong chạy `flutter gen-l10n`.
+- Tên và nội dung lời nhắc có sẵn: trong các file JSON ở trên.
+- Lời nhắc tự tạo giữ nguyên chữ người dùng gõ.
+- Giờ luôn hiện dạng 24 giờ (08:00, 20:00) ở mọi ngôn ngữ.
+
+Các bản dịch do AI viết, **chưa có người bản xứ soát lại**. Nên nhờ người bản xứ đọc trước khi quảng bá ở từng nước.
+
 ## Giới hạn đã biết
 
 - **iPhone giữ tối đa 64 thông báo đã lên lịch cho mỗi app.** App chặn ở 60 lần nhắc
@@ -54,6 +66,8 @@ Sau khi sửa, chạy `flutter test` để kiểm tra dữ liệu.
   Một số hãng (Xiaomi, Oppo, Vivo, Huawei) còn tự tắt app chạy nền; người dùng phải tắt "tối ưu pin" cho app.
 - Bấm "Xong" trên thông báo luôn tính cho **ngày hôm nay**. Thông báo từ hôm qua bấm hôm nay sẽ tính vào hôm nay.
 - Bản web chỉ để xem giao diện, không gửi thông báo.
+- Đổi ngôn ngữ máy khi app đang mở: trên iPhone, chữ trên hai nút của thông báo chỉ đổi sau khi mở lại app.
+- Bộ lời nhắc giống nhau ở mọi nước; vài lời nhắc (khóa gas, ngày đóng tiền điện) hợp với Việt Nam hơn.
 
 ## Chưa làm (để sau)
 
