@@ -1,4 +1,4 @@
-# Nhớ Nhé: ghi chú cho Claude
+# Nhớ Nhé (ForgetNot): ghi chú cho Claude
 
 App Flutter cho người hay quên: một thư viện lời nhắc có sẵn (uống nước, uống thuốc, đóng tiền điện...), bật là chạy,
 bấm "Xong" ngay trên thông báo. Cùng kiểu dự án với `frog-pond-english`.
@@ -36,6 +36,9 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
   **Thông báo chỉ thử được trên điện thoại thật.**
 
 ## Quy ước
+- Tên app: **Nhớ Nhé** khi máy dùng tiếng Việt, **ForgetNot** ở mọi ngôn ngữ khác. Tên dưới biểu tượng nằm ở
+  `ios/Runner/{en,vi}.lproj/InfoPlist.strings` và `android/app/src/main/res/values{,-vi}/strings.xml`; tên trong app ở
+  `appNameFor` (`lib/texts.dart`). Tên dưới biểu tượng theo ngôn ngữ của máy, không theo nút đổi ngôn ngữ trong app.
 - Mã định danh app: `com.phenv.nhonhe` (Android và iOS). Không đổi sau khi đã lên store.
 - Không thu thập dữ liệu, không cần mạng, không tài khoản. Không thêm thư viện gửi dữ liệu ra ngoài nếu chủ dự án chưa đồng ý.
 - Đa ngôn ngữ: vi, en, zh, es, pt, fr, de, ja, ko, id. App theo ngôn ngữ của máy, không có thì dùng tiếng Anh;

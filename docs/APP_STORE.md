@@ -1,4 +1,4 @@
-# Đưa Nhớ Nhé lên App Store bằng Codemagic
+# Đưa Nhớ Nhé (ForgetNot) lên App Store bằng Codemagic
 
 Codemagic thay cho máy Mac: nó build bản iPhone và tải lên App Store Connect. Cấu hình nằm trong `codemagic.yaml`.
 Các bước dưới đây chỉ làm một lần. Tên nút trên web của Apple và Codemagic có thể đổi chút ít theo thời gian.
@@ -14,12 +14,13 @@ bước đó cho Claude và sửa xong rồi mới làm các bước dưới.
 
 ## 1. Đăng ký mã app với Apple
 developer.apple.com > Account > Certificates, Identifiers & Profiles > **Identifiers** > dấu **+** > App IDs > App.
-- Description: tên app. Bundle ID: chọn **Explicit**, nhập `com.phenv.nhonhe`.
+- Description: `ForgetNot`. Bundle ID: chọn **Explicit**, nhập `com.phenv.nhonhe`.
 - Không cần tích khả năng (capability) nào. App chỉ dùng thông báo tại máy, không dùng Push Notifications.
 
 ## 2. Tạo app trên App Store Connect
 appstoreconnect.apple.com > Apps > dấu **+** > New App.
-- Platform: iOS. Name: tên hiện trên App Store (phải chưa ai dùng). Primary language: tùy bạn.
+- Platform: iOS. Name: `ForgetNot` (nếu Apple báo trùng, thử `ForgetNot: Daily Reminders`). Primary language: English.
+- Sau khi tạo, thêm ngôn ngữ Vietnamese cho trang app và đặt tên ở đó là `Nhớ Nhé`.
 - Bundle ID: chọn mã vừa đăng ký. SKU: ví dụ `nhonhe`.
 
 ## 3. Tạo khóa API cho Codemagic

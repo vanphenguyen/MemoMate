@@ -13,5 +13,6 @@ Bản đầu tiên.
 - Chọn biểu tượng (20 mẫu) cho lời nhắc tự tạo.
 - Nút đổi ngôn ngữ trong app (hình quả địa cầu), có lựa chọn "Theo điện thoại".
 - Biểu tượng app riêng (chuông trắng nền tím) thay cho biểu tượng mặc định của Flutter.
+- Tên app là "Nhớ Nhé" trên máy tiếng Việt và "ForgetNot" ở các ngôn ngữ khác.
 - 10 ngôn ngữ, tự theo ngôn ngữ của điện thoại: Việt, Anh, Trung (giản thể), Tây Ban Nha, Bồ Đào Nha, Pháp, Đức,
   Nhật, Hàn, Indonesia.

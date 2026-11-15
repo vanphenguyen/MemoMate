@@ -1,6 +1,6 @@
-# Nhớ Nhé
+# Nhớ Nhé (ForgetNot)
 
-App nhắc việc cho người hay quên, chạy trên Android và iPhone (Flutter).
+App nhắc việc cho người hay quên (tên quốc tế: ForgetNot), chạy trên Android và iPhone (Flutter).
 Chọn lời nhắc có sẵn, gạt công tắc là chạy; bấm "Xong" ngay trên thông báo.
 
 | Hôm nay | Thư viện lời nhắc | Sửa lời nhắc |

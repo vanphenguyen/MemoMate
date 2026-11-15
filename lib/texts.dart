@@ -6,6 +6,11 @@ import 'l10n/app_localizations.dart';
 import 'models/reminder.dart';
 import 'models/schedule.dart';
 
+/// The app's name: "Nhớ Nhé" in Vietnamese, "ForgetNot" everywhere else.
+/// The name under the app icon follows the same rule (see
+/// `ios/Runner/*.lproj/InfoPlist.strings` and Android's `values*/strings.xml`).
+String appNameFor(String language) => language == 'vi' ? 'Nhớ Nhé' : 'ForgetNot';
+
 /// Each language the app has, by its own name, in the order shown in the
 /// language list.
 const languageNames = <String, String>{

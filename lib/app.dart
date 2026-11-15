@@ -32,8 +32,6 @@ class NhoNheApp extends StatelessWidget {
   /// Forces a language (used by tests); normally the phone's is followed.
   final Locale? locale;
 
-  static const appName = 'Nhớ Nhé';
-
   static const seedColor = Color(0xFF5B5BD6);
 
   @override
@@ -52,7 +50,8 @@ class NhoNheApp extends StatelessWidget {
   Widget _app() {
     final choice = controller.languageChoice;
     return MaterialApp(
-      title: appName,
+      onGenerateTitle: (context) =>
+          appNameFor(Localizations.localeOf(context).languageCode),
       debugShowCheckedModeBanner: false,
       // A language picked in the app wins; otherwise the phone's is used.
       locale: locale ?? (choice == null ? null : Locale(choice)),

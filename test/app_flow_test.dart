@@ -228,6 +228,13 @@ void main() {
     );
   });
 
+  test('the app is Nhớ Nhé in Vietnamese and ForgetNot elsewhere', () {
+    expect(appNameFor('vi'), 'Nhớ Nhé');
+    for (final language in languageNames.keys.where((l) => l != 'vi')) {
+      expect(appNameFor(language), 'ForgetNot');
+    }
+  });
+
   test('picks the phone language when translated, English otherwise', () {
     expect(resolveLocale(const [Locale('ko', 'KR')]).languageCode, 'ko');
     expect(resolveLocale(const [Locale('sv'), Locale('de', 'AT')]).languageCode, 'de');

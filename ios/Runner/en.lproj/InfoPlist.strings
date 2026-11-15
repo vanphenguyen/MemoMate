@@ -1,0 +1,3 @@
+/* The name under the app icon. Vietnamese phones use vi.lproj. */
+"CFBundleDisplayName" = "ForgetNot";
+"CFBundleName" = "ForgetNot";
