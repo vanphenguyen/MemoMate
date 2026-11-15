@@ -1,0 +1,39 @@
+{
+  "id": "ra-khoi-nha",
+  "title": "Ra khỏi nhà",
+  "icon": "door_front",
+  "color": "#6B56C9",
+  "templates": [
+    {
+      "id": "truoc-khi-di-lam",
+      "title": "Kiểm tra trước khi đi làm",
+      "icon": "key",
+      "message": "Chìa khóa, ví, điện thoại. Đã khóa gas và tắt bếp chưa?",
+      "schedule": {
+        "type": "weekly",
+        "times": [
+          "07:30"
+        ],
+        "weekdays": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    },
+    {
+      "id": "sac-dien-thoai",
+      "title": "Sạc điện thoại",
+      "icon": "battery_charging_full",
+      "message": "Cắm sạc điện thoại cho ngày mai.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "22:00"
+        ]
+      }
+    }
+  ]
+}

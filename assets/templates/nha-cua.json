@@ -1,0 +1,78 @@
+{
+  "id": "nha-cua",
+  "title": "Nhà cửa",
+  "icon": "home",
+  "color": "#C77B1F",
+  "templates": [
+    {
+      "id": "do-rac",
+      "title": "Đổ rác",
+      "icon": "delete",
+      "message": "Mang rác ra ngoài trước khi quên.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "19:30"
+        ]
+      }
+    },
+    {
+      "id": "tuoi-cay",
+      "title": "Tưới cây",
+      "icon": "local_florist",
+      "message": "Cây đang chờ được tưới.",
+      "schedule": {
+        "type": "weekly",
+        "times": [
+          "07:00"
+        ],
+        "weekdays": [
+          1,
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "id": "giat-ga",
+      "title": "Giặt ga giường",
+      "icon": "bed",
+      "message": "Thay và giặt ga giường tuần này.",
+      "schedule": {
+        "type": "weekly",
+        "times": [
+          "09:00"
+        ],
+        "weekdays": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "loi-loc-nuoc",
+      "title": "Kiểm tra lõi lọc nước",
+      "icon": "filter_alt",
+      "message": "Xem lõi lọc nước đã đến hạn thay chưa.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 1
+      }
+    },
+    {
+      "id": "ve-sinh-may-giat",
+      "title": "Vệ sinh máy giặt",
+      "icon": "local_laundry_service",
+      "message": "Chạy chế độ vệ sinh lồng giặt.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 15
+      }
+    }
+  ]
+}

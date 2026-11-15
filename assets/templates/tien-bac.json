@@ -1,0 +1,73 @@
+{
+  "id": "tien-bac",
+  "title": "Tiền bạc",
+  "icon": "payments",
+  "color": "#3B6FD4",
+  "templates": [
+    {
+      "id": "tien-nha",
+      "title": "Tiền nhà",
+      "icon": "house",
+      "message": "Đến ngày chuyển tiền nhà.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 1
+      }
+    },
+    {
+      "id": "tien-dien",
+      "title": "Tiền điện",
+      "icon": "bolt",
+      "message": "Kiểm tra và đóng tiền điện tháng này.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 5
+      }
+    },
+    {
+      "id": "tien-nuoc",
+      "title": "Tiền nước",
+      "icon": "water",
+      "message": "Kiểm tra và đóng tiền nước tháng này.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 10
+      }
+    },
+    {
+      "id": "tien-internet",
+      "title": "Tiền internet",
+      "icon": "wifi",
+      "message": "Đóng cước internet tháng này.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 15
+      }
+    },
+    {
+      "id": "the-tin-dung",
+      "title": "Trả thẻ tín dụng",
+      "icon": "credit_card",
+      "message": "Thanh toán dư nợ thẻ trước hạn.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "09:00"
+        ],
+        "day": 20
+      }
+    }
+  ]
+}

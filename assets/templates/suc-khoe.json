@@ -1,0 +1,93 @@
+{
+  "id": "suc-khoe",
+  "title": "Sức khỏe",
+  "icon": "favorite",
+  "color": "#2E9E6B",
+  "templates": [
+    {
+      "id": "uong-nuoc",
+      "title": "Uống nước",
+      "icon": "water_drop",
+      "message": "Uống một cốc nước nào!",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "08:00",
+          "09:30",
+          "11:00",
+          "12:30",
+          "14:00",
+          "15:30",
+          "17:00",
+          "19:00"
+        ]
+      }
+    },
+    {
+      "id": "uong-thuoc",
+      "title": "Uống thuốc",
+      "icon": "medication",
+      "message": "Đến giờ uống thuốc rồi.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "08:00",
+          "20:00"
+        ]
+      }
+    },
+    {
+      "id": "vitamin",
+      "title": "Uống vitamin",
+      "icon": "spa",
+      "message": "Đừng quên viên vitamin hôm nay.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "08:30"
+        ]
+      }
+    },
+    {
+      "id": "nghi-mat",
+      "title": "Cho mắt nghỉ",
+      "icon": "visibility",
+      "message": "Rời màn hình, nhìn ra xa 20 giây.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "09:30",
+          "11:30",
+          "14:30",
+          "16:30"
+        ]
+      }
+    },
+    {
+      "id": "vuon-vai",
+      "title": "Đứng dậy vươn vai",
+      "icon": "accessibility_new",
+      "message": "Ngồi lâu rồi, đứng dậy đi lại vài phút.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "10:00",
+          "15:00",
+          "17:00"
+        ]
+      }
+    },
+    {
+      "id": "di-ngu",
+      "title": "Đi ngủ đúng giờ",
+      "icon": "bedtime",
+      "message": "Cất điện thoại và chuẩn bị đi ngủ.",
+      "schedule": {
+        "type": "daily",
+        "times": [
+          "22:30"
+        ]
+      }
+    }
+  ]
+}

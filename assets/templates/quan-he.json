@@ -1,0 +1,36 @@
+{
+  "id": "quan-he",
+  "title": "Người thân",
+  "icon": "groups",
+  "color": "#C2477A",
+  "templates": [
+    {
+      "id": "goi-bo-me",
+      "title": "Gọi điện cho bố mẹ",
+      "icon": "call",
+      "message": "Gọi về nhà hỏi thăm bố mẹ nhé.",
+      "schedule": {
+        "type": "weekly",
+        "times": [
+          "20:00"
+        ],
+        "weekdays": [
+          7
+        ]
+      }
+    },
+    {
+      "id": "nhan-ban-cu",
+      "title": "Hỏi thăm một người bạn",
+      "icon": "chat",
+      "message": "Nhắn cho một người bạn lâu chưa nói chuyện.",
+      "schedule": {
+        "type": "monthly",
+        "times": [
+          "20:00"
+        ],
+        "day": 1
+      }
+    }
+  ]
+}
