@@ -22,6 +22,25 @@ workflows:
     artifacts:
       - /tmp/xcodebuild_logs/*.log
 
+  # Builds an APK to install on an Android phone for testing. It is signed
+  # with the debug key, so it is not for Google Play.
+  android-apk:
+    name: Android - APK để cài thử
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    environment:
+      flutter: 3.47.8
+      java: 17
+    scripts:
+      - name: Get packages
+        script: flutter pub get
+      - name: Check and test
+        script: flutter analyze && flutter test
+      - name: Build the APK
+        script: flutter build apk --release
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
+
   ios-release:
     name: iOS - App Store
     instance_type: mac_mini_m2

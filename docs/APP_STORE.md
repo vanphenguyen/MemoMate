@@ -8,6 +8,9 @@ Codemagic > app MemoMate > **Start new build** > nhánh `main` > workflow **iOS 
 Bước này chỉ kiểm tra bản iPhone biên dịch được; kết quả không cài được lên máy. Nếu có bước bị đỏ, gửi nhật ký của
 bước đó cho Claude và sửa xong rồi mới làm các bước dưới.
 
+Muốn thử trên máy Android: chạy workflow **Android - APK để cài thử**, xong thì tải file `app-release.apk` ở mục
+Artifacts của lần build đó và cài lên máy (phải cho phép cài app từ nguồn ngoài).
+
 ## Cần có trước
 - Tài khoản **Apple Developer Program** (99 USD mỗi năm), đã được Apple duyệt.
 - Quyết định xong **tên app** và **mã app** (`com.phenv.nhonhe`). Mã app không đổi được sau khi đăng ký.
