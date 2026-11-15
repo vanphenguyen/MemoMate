@@ -26,6 +26,8 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
   (cài Flutter vào `~/flutter`), rồi thêm `~/flutter/bin` vào `PATH`.
 - Xem giao diện trên cloud: `flutter build web --no-web-resources-cdn`, phục vụ `build/web` bằng `python3 -m http.server`,
   chụp bằng Playwright (Node) khung 390x844 và đặt `locale: 'vi-VN'`.
+- Repo GitHub: `vanphenguyen/MemoMate`. Mỗi lần đẩy lên `main`, `.github/workflows/pages.yml` đăng bản web lên
+  https://vanphenguyen.github.io/MemoMate/ (đổi tên repo thì phải sửa `--base-href` trong file đó).
 - Bản web chỉ để xem giao diện: trình duyệt không lên lịch thông báo được, nên web dùng `NoopReminderNotifier`.
 - Container cloud không tải được Android SDK; APK được build bởi GitHub Actions (`.github/workflows/build.yml`).
   **Thông báo chỉ thử được trên điện thoại thật.**

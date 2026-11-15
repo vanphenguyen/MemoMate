@@ -7,6 +7,8 @@ Chọn lời nhắc có sẵn, gạt công tắc là chạy; bấm "Xong" ngay t
 |---|---|---|
 | ![Hôm nay](docs/anh/hom-nay.png) | ![Thư viện](docs/anh/thu-vien.png) | ![Sửa](docs/anh/sua.png) |
 
+**Xem thử trên web:** https://vanphenguyen.github.io/MemoMate/ (chỉ xem giao diện; thông báo chỉ chạy trong app trên điện thoại).
+
 ## Có gì trong bản đầu
 
 - 20 lời nhắc có sẵn trong 5 nhóm: Sức khỏe, Nhà cửa, Tiền bạc, Người thân, Ra khỏi nhà.
