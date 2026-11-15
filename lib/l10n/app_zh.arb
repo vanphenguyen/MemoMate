@@ -28,6 +28,7 @@
   "editEditTitle": "编辑提醒",
   "fieldTitleLabel": "提醒什么？",
   "fieldTitleHint": "例如：喂猫",
+  "labelIcon": "图标",
   "labelRepeat": "重复",
   "repeatDaily": "每天",
   "repeatWeekly": "每周",

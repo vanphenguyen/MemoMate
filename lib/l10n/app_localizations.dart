@@ -282,6 +282,12 @@ abstract class AppLocalizations {
   /// **'For example: Feed the cat'**
   String get fieldTitleHint;
 
+  /// No description provided for @labelIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get labelIcon;
+
   /// No description provided for @labelRepeat.
   ///
   /// In en, this message translates to:

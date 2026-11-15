@@ -92,6 +92,7 @@ void main() {
     expect(find.text('Hãy đặt tên cho lời nhắc.'), findsOneWidget);
 
     await tester.enterText(find.byKey(const ValueKey('title-field')), 'Cho mèo ăn');
+    await tester.tap(find.byKey(const ValueKey('icon-pets')));
     await tester.tap(find.text('Theo tuần'));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('save')));
@@ -100,6 +101,7 @@ void main() {
     final made = controller.reminders.single;
     expect(made.isCustom, isTrue);
     expect(made.title, 'Cho mèo ăn');
+    expect(made.icon, 'pets');
     expect(notifier.lastSynced.single.body, 'Đến giờ: Cho mèo ăn');
     expect(made.schedule.type, ScheduleType.weekly);
     expect(find.text('Của tôi'), findsOneWidget);

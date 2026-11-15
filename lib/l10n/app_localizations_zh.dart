@@ -116,6 +116,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fieldTitleHint => '例如：喂猫';
 
   @override
+  String get labelIcon => '图标';
+
+  @override
   String get labelRepeat => '重复';
 
   @override

@@ -123,6 +123,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fieldTitleHint => 'Por exemplo: Dar comida ao gato';
 
   @override
+  String get labelIcon => 'Ícone';
+
+  @override
   String get labelRepeat => 'Repetir';
 
   @override

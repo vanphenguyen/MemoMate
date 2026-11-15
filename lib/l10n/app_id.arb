@@ -28,6 +28,7 @@
   "editEditTitle": "Ubah pengingat",
   "fieldTitleLabel": "Ingatkan apa?",
   "fieldTitleHint": "Contoh: Beri makan kucing",
+  "labelIcon": "Ikon",
   "labelRepeat": "Ulangi",
   "repeatDaily": "Harian",
   "repeatWeekly": "Mingguan",

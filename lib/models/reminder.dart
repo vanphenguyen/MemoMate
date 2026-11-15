@@ -147,12 +147,14 @@ class Reminder {
 
   bool get isCustom => templateId == null;
 
-  /// A copy with a new [schedule] and [title] (null keeps the ready-made name).
-  Reminder edited({required String? title, required Schedule schedule}) => Reminder(
+  /// A copy with a new [schedule] and [title] (null keeps the ready-made name),
+  /// and optionally a new [icon].
+  Reminder edited({required String? title, required Schedule schedule, String? icon}) =>
+      Reminder(
         id: id,
         templateId: templateId,
         title: title,
-        icon: icon,
+        icon: icon ?? this.icon,
         color: color,
         schedule: schedule,
         since: since,

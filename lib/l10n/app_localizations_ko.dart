@@ -117,6 +117,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get fieldTitleHint => '예: 고양이 밥 주기';
 
   @override
+  String get labelIcon => '아이콘';
+
+  @override
   String get labelRepeat => '반복';
 
   @override

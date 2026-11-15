@@ -28,6 +28,7 @@
   "editEditTitle": "알림 수정",
   "fieldTitleLabel": "무엇을 알릴까요?",
   "fieldTitleHint": "예: 고양이 밥 주기",
+  "labelIcon": "아이콘",
   "labelRepeat": "반복",
   "repeatDaily": "매일",
   "repeatWeekly": "매주",

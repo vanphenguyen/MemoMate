@@ -28,6 +28,7 @@
   "editEditTitle": "Erinnerung bearbeiten",
   "fieldTitleLabel": "Woran erinnern?",
   "fieldTitleHint": "Zum Beispiel: Katze füttern",
+  "labelIcon": "Symbol",
   "labelRepeat": "Wiederholen",
   "repeatDaily": "Täglich",
   "repeatWeekly": "Wöchentlich",

@@ -118,6 +118,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get fieldTitleHint => '例：猫にごはんをあげる';
 
   @override
+  String get labelIcon => 'アイコン';
+
+  @override
   String get labelRepeat => '繰り返し';
 
   @override

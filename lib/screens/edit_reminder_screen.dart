@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../app.dart';
 import '../models/reminder.dart';
 import '../models/schedule.dart';
+import '../widgets/reminder_icons.dart';
 import 'library_screen.dart';
 
 /// Creates a self-made reminder, or changes the schedule of an existing one.
@@ -22,6 +23,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
   late List<ClockTime> _times;
   late Set<int> _weekdays;
   late int _dayOfMonth;
+  late String _icon;
   String? _error;
 
   bool get _isNew => widget.reminder == null;
@@ -33,6 +35,7 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
     final schedule = reminder?.schedule;
     _title = TextEditingController();
     _type = schedule?.type ?? ScheduleType.daily;
+    _icon = reminder?.icon ?? Reminder.customIcon;
     _times = List.of(schedule?.times ?? const [ClockTime(9, 0)]);
     _weekdays = Set.of(
       schedule?.type == ScheduleType.weekly ? schedule!.weekdays : const {1, 2, 3, 4, 5},
@@ -102,11 +105,15 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
         existing.title == null &&
         title == controller.titleOf(existing);
     final reminder = existing != null
-        ? existing.edited(title: keepsReadyMadeName ? null : title, schedule: schedule)
+        ? existing.edited(
+            title: keepsReadyMadeName ? null : title,
+            schedule: schedule,
+            icon: _icon,
+          )
         : Reminder(
             id: 'custom-${controller.now.microsecondsSinceEpoch}',
             title: title,
-            icon: Reminder.customIcon,
+            icon: _icon,
             color: Reminder.customColor,
             schedule: schedule,
             since: controller.now,
@@ -150,6 +157,22 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               ),
               onChanged: (_) => setState(() => _error = null),
             ),
+            // Library reminders keep their own icon; yours can be chosen.
+            if (!isTemplate) ...[
+              _Label(l10n.labelIcon),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  for (final name in customIconChoices)
+                    _IconChoice(
+                      name: name,
+                      selected: name == _icon,
+                      onTap: () => setState(() => _icon = name),
+                    ),
+                ],
+              ),
+            ],
             _Label(l10n.labelRepeat),
             SegmentedButton<ScheduleType>(
               showSelectedIcon: false,
@@ -246,6 +269,43 @@ class _EditReminderScreenState extends State<EditReminderScreen> {
               ),
             ],
           ],
+        ),
+      ),
+    );
+  }
+}
+
+/// One round icon button in the icon picker.
+class _IconChoice extends StatelessWidget {
+  const _IconChoice({required this.name, required this.selected, required this.onTap});
+
+  final String name;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: name,
+      child: InkResponse(
+        key: ValueKey('icon-$name'),
+        onTap: onTap,
+        radius: 28,
+        child: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: selected ? scheme.primary : scheme.surfaceContainerHigh,
+          ),
+          child: Icon(
+            reminderIcon(name),
+            size: 24,
+            color: selected ? scheme.onPrimary : scheme.onSurfaceVariant,
+          ),
         ),
       ),
     );

@@ -120,6 +120,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get fieldTitleHint => 'Contoh: Beri makan kucing';
 
   @override
+  String get labelIcon => 'Ikon';
+
+  @override
   String get labelRepeat => 'Ulangi';
 
   @override

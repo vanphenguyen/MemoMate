@@ -28,6 +28,7 @@
   "editEditTitle": "リマインダーを編集",
   "fieldTitleLabel": "何をリマインドしますか？",
   "fieldTitleHint": "例：猫にごはんをあげる",
+  "labelIcon": "アイコン",
   "labelRepeat": "繰り返し",
   "repeatDaily": "毎日",
   "repeatWeekly": "毎週",

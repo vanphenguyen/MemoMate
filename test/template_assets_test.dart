@@ -69,6 +69,13 @@ void main() {
     }
   });
 
+  test('every icon offered for your own reminders exists', () {
+    for (final name in customIconChoices) {
+      expect(reminderIcons, contains(name));
+    }
+    expect(customIconChoices, contains(Reminder.customIcon));
+  });
+
   test('switching on the whole library stays within the iPhone limit', () {
     final all = [
       for (final g in groups)

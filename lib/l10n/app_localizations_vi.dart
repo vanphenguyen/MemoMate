@@ -121,6 +121,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get fieldTitleHint => 'Ví dụ: Cho mèo ăn';
 
   @override
+  String get labelIcon => 'Biểu tượng';
+
+  @override
   String get labelRepeat => 'Lặp lại';
 
   @override

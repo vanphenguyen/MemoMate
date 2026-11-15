@@ -28,6 +28,7 @@
   "editEditTitle": "Editar recordatorio",
   "fieldTitleLabel": "¿Qué recordar?",
   "fieldTitleHint": "Por ejemplo: Dar de comer al gato",
+  "labelIcon": "Icono",
   "labelRepeat": "Repetir",
   "repeatDaily": "Diario",
   "repeatWeekly": "Semanal",

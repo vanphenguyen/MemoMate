@@ -28,6 +28,7 @@
   "editEditTitle": "Editar lembrete",
   "fieldTitleLabel": "Lembrar o quê?",
   "fieldTitleHint": "Por exemplo: Dar comida ao gato",
+  "labelIcon": "Ícone",
   "labelRepeat": "Repetir",
   "repeatDaily": "Diário",
   "repeatWeekly": "Semanal",

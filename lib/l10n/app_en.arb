@@ -76,6 +76,7 @@
   "editEditTitle": "Edit reminder",
   "fieldTitleLabel": "Remind me to…",
   "fieldTitleHint": "For example: Feed the cat",
+  "labelIcon": "Icon",
   "labelRepeat": "Repeat",
   "repeatDaily": "Daily",
   "repeatWeekly": "Weekly",

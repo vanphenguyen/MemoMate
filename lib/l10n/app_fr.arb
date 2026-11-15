@@ -28,6 +28,7 @@
   "editEditTitle": "Modifier le rappel",
   "fieldTitleLabel": "Que faut-il rappeler ?",
   "fieldTitleHint": "Par exemple : Nourrir le chat",
+  "labelIcon": "Icône",
   "labelRepeat": "Répéter",
   "repeatDaily": "Chaque jour",
   "repeatWeekly": "Chaque semaine",
