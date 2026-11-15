@@ -1,0 +1,41 @@
+# Codemagic builds the iPhone app and uploads it to App Store Connect
+# (TestFlight). Start it by hand in Codemagic: Start new build > ios-release.
+# One-time setup in Codemagic and Apple is described in docs/APP_STORE.md.
+workflows:
+  ios-release:
+    name: iOS - App Store
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      # The name given to the App Store Connect API key in Codemagic.
+      app_store_connect: codemagic
+    environment:
+      flutter: 3.47.8
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.phenv.nhonhe
+    scripts:
+      - name: Get packages
+        script: flutter pub get
+      - name: Check and test
+        script: flutter analyze && flutter test
+      - name: Apply code signing
+        script: xcode-project use-profiles
+      - name: Build the app
+        script: |
+          flutter build ipa --release \
+            --build-number="$PROJECT_BUILD_NUMBER" \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        # Uploads the build; it appears under TestFlight in App Store Connect.
+        # Sending it for App Store review is done by hand on Apple's site.
+        submit_to_testflight: false
+        submit_to_app_store: false

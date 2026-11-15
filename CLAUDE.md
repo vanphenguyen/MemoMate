@@ -28,6 +28,9 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
   chụp bằng Playwright (Node) khung 390x844 và đặt `locale: 'vi-VN'`.
 - Repo GitHub: `vanphenguyen/MemoMate`. Mỗi lần đẩy lên `main`, `.github/workflows/pages.yml` đăng bản web lên
   https://vanphenguyen.github.io/MemoMate/ (đổi tên repo thì phải sửa `--base-href` trong file đó).
+- Bản iPhone được build và tải lên App Store Connect bởi Codemagic (`codemagic.yaml`, chạy tay); các bước thiết lập
+  ở `docs/APP_STORE.md`. Trang chính sách riêng tư là `web/privacy.html`, được đăng cùng bản web.
+- Biểu tượng app: sửa ảnh trong `assets/icon/` rồi chạy `dart run flutter_launcher_icons`.
 - Bản web chỉ để xem giao diện: trình duyệt không lên lịch thông báo được, nên web dùng `NoopReminderNotifier`.
 - Container cloud không tải được Android SDK; APK được build bởi GitHub Actions (`.github/workflows/build.yml`).
   **Thông báo chỉ thử được trên điện thoại thật.**

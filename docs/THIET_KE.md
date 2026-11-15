@@ -72,8 +72,8 @@ Các bản dịch do AI viết, **chưa có người bản xứ soát lại**. N
 
 ## Chưa làm (để sau)
 
-- Biểu tượng app và màn hình chờ riêng (đang dùng mặc định của Flutter).
+- Màn hình chờ riêng (đang dùng mặc định của Flutter).
 - Chuỗi ngày liên tiếp, widget màn hình chính.
 - Nhắc theo vị trí, nhắc người thân khi bỏ lỡ.
 - Thu phí. Dự kiến: miễn phí một số lời nhắc đang bật, trả tiền để mở không giới hạn.
-- Ký app bằng khóa phát hành để đưa lên Google Play; build iOS cần máy Mac hoặc dịch vụ build iOS và tài khoản Apple Developer.
+- Ký app bằng khóa phát hành để đưa lên Google Play; bản iOS xem `docs/APP_STORE.md`.
