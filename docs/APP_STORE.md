@@ -3,6 +3,11 @@
 Codemagic thay cho máy Mac: nó build bản iPhone và tải lên App Store Connect. Cấu hình nằm trong `codemagic.yaml`.
 Các bước dưới đây chỉ làm một lần. Tên nút trên web của Apple và Codemagic có thể đổi chút ít theo thời gian.
 
+## 0. Build thử trước (không cần tài khoản Apple)
+Codemagic > app MemoMate > **Start new build** > nhánh `main` > workflow **iOS - Build thử (không cần Apple)**.
+Bước này chỉ kiểm tra bản iPhone biên dịch được; kết quả không cài được lên máy. Nếu có bước bị đỏ, gửi nhật ký của
+bước đó cho Claude và sửa xong rồi mới làm các bước dưới.
+
 ## Cần có trước
 - Tài khoản **Apple Developer Program** (99 USD mỗi năm), đã được Apple duyệt.
 - Quyết định xong **tên app** và **mã app** (`com.phenv.nhonhe`). Mã app không đổi được sau khi đăng ký.
