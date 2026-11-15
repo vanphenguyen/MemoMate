@@ -55,5 +55,9 @@
   "actionDone": "完了",
   "actionSnooze": "{minutes}分後に再通知",
   "languageTitle": "言語",
-  "languageFollowPhone": "スマホの設定に合わせる"
+  "languageFollowPhone": "スマホの設定に合わせる",
+  "testNotification": "テスト通知を送る",
+  "testNotificationBody": "通知は正常に動作しています。",
+  "testNotificationLaterBody": "予約通知も正常に動作しています。",
+  "testNotificationSent": "送信しました。約1分後にもう1件届きます。"
 }

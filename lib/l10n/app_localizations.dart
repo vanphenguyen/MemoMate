@@ -449,6 +449,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Same as phone'**
   String get languageFollowPhone;
+
+  /// No description provided for @testNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a test notification'**
+  String get testNotification;
+
+  /// No description provided for @testNotificationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are working.'**
+  String get testNotificationBody;
+
+  /// No description provided for @testNotificationLaterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled notifications are working too.'**
+  String get testNotificationLaterBody;
+
+  /// No description provided for @testNotificationSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent. Another one will arrive in about 1 minute.'**
+  String get testNotificationSent;
 }
 
 class _AppLocalizationsDelegate

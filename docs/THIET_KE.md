@@ -63,10 +63,14 @@ Các bản dịch do AI viết, **chưa có người bản xứ soát lại**. N
 
 - **iPhone giữ tối đa 64 thông báo đã lên lịch cho mỗi app.** App chặn ở 60 lần nhắc
   (mỗi giờ nhắc tính một lần; lịch theo tuần tính theo từng ngày). Bật cả thư viện hiện dùng khoảng 40.
-- **Android có thể nhắc trễ vài phút** khi máy tiết kiệm pin, vì app dùng chế độ hẹn giờ không cần xin quyền đặc biệt.
+- **Android: app dùng hẹn giờ chính xác** (quyền `USE_EXACT_ALARM`, và `SCHEDULE_EXACT_ALARM` cho Android 12). Nếu không,
+  Android được phép giữ thông báo lại tới cả tiếng. Khi đưa lên Google Play phải khai báo app thuộc loại nhắc việc,
+  lịch hoặc báo thức mới được dùng quyền này. Nếu máy không cho hẹn giờ chính xác, app tự lùi về kiểu thường (có thể trễ).
   Một số hãng (Xiaomi, Oppo, Vivo, Huawei) còn tự tắt app chạy nền; người dùng phải tắt "tối ưu pin" cho app.
 - Bấm "Xong" trên thông báo luôn tính cho **ngày hôm nay**. Thông báo từ hôm qua bấm hôm nay sẽ tính vào hôm nay.
 - Bản web chỉ để xem giao diện, không gửi thông báo.
+- Nút "Gửi thông báo thử" ở cuối tab Lời nhắc gửi một thông báo ngay và một thông báo sau 1 phút, để kiểm tra máy
+  có nhận được cả hai kiểu hay không.
 - Đổi ngôn ngữ (trong app hoặc của máy) khi app đang mở: trên iPhone, chữ trên hai nút của thông báo chỉ đổi sau khi mở lại app.
 - Bộ lời nhắc giống nhau ở mọi nước; vài lời nhắc (khóa gas, ngày đóng tiền điện) hợp với Việt Nam hơn.
 

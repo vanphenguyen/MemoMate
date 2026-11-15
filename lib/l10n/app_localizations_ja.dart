@@ -210,4 +210,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get languageFollowPhone => 'スマホの設定に合わせる';
+
+  @override
+  String get testNotification => 'テスト通知を送る';
+
+  @override
+  String get testNotificationBody => '通知は正常に動作しています。';
+
+  @override
+  String get testNotificationLaterBody => '予約通知も正常に動作しています。';
+
+  @override
+  String get testNotificationSent => '送信しました。約1分後にもう1件届きます。';
 }

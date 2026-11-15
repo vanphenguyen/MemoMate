@@ -208,4 +208,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get languageFollowPhone => '跟随手机';
+
+  @override
+  String get testNotification => '发送测试通知';
+
+  @override
+  String get testNotificationBody => '通知工作正常。';
+
+  @override
+  String get testNotificationLaterBody => '定时通知也工作正常。';
+
+  @override
+  String get testNotificationSent => '已发送。大约 1 分钟后还会收到一条。';
 }

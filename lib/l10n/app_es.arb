@@ -55,5 +55,9 @@
   "actionDone": "Hecho",
   "actionSnooze": "Recordar en {minutes} min",
   "languageTitle": "Idioma",
-  "languageFollowPhone": "Igual que el teléfono"
+  "languageFollowPhone": "Igual que el teléfono",
+  "testNotification": "Enviar notificación de prueba",
+  "testNotificationBody": "Las notificaciones funcionan.",
+  "testNotificationLaterBody": "Las notificaciones programadas también funcionan.",
+  "testNotificationSent": "Enviada. Llegará otra en aproximadamente 1 minuto."
 }

@@ -221,6 +221,15 @@ void main() {
     expect(controller.store.languageChoice, isNull);
   });
 
+  testWidgets('a test notification asks for permission, then is sent', (tester) async {
+    final controller = await boot(tester);
+    final sent = await tester.runAsync(controller.sendTestNotification);
+    expect(sent, isTrue);
+    expect(notifier.permissionRequests, 1);
+    expect(notifier.testsSent, 1);
+    expect(controller.store.askedPermission, isTrue);
+  });
+
   test('every app language is in the language list', () {
     expect(
       languageNames.keys.toSet(),

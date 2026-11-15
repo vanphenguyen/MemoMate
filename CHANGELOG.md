@@ -14,5 +14,6 @@ Bản đầu tiên.
 - Nút đổi ngôn ngữ trong app (hình quả địa cầu), có lựa chọn "Theo điện thoại".
 - Biểu tượng app riêng (chuông trắng nền tím) thay cho biểu tượng mặc định của Flutter.
 - Tên app là "Nhớ Nhé" trên máy tiếng Việt và "ForgetNot" ở các ngôn ngữ khác.
+- Android: lời nhắc dùng hẹn giờ chính xác để đến đúng giờ; biểu tượng thông báo riêng; nút "Gửi thông báo thử".
 - 10 ngôn ngữ, tự theo ngôn ngữ của điện thoại: Việt, Anh, Trung (giản thể), Tây Ban Nha, Bồ Đào Nha, Pháp, Đức,
   Nhật, Hàn, Indonesia.

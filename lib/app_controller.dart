@@ -93,6 +93,7 @@ class AppController extends ChangeNotifier {
   /// (they are lost if the app's data was restored or the OS dropped them).
   Future<void> start() async {
     await store.pruneOld(now);
+    if (store.askedPermission) notificationsAllowed = await notifier.isAllowed();
     await store.saveLanguage(_texts.language);
     if (_reminders.isNotEmpty) await _syncNotifications();
   }
@@ -101,6 +102,8 @@ class AppController extends ChangeNotifier {
   Future<void> refresh() async {
     await store.reload();
     _reminders = store.reminders();
+    // The user may have switched notifications on or off in Settings.
+    if (store.askedPermission) notificationsAllowed = await notifier.isAllowed();
     notifyListeners();
   }
 
@@ -132,6 +135,22 @@ class AppController extends ChangeNotifier {
     _reminders = next;
     await _persist();
     return null;
+  }
+
+  /// Sends a test notification now and another in a minute. Returns false
+  /// when the phone does not let the app show notifications.
+  Future<bool> sendTestNotification() async {
+    notificationsAllowed = await notifier.requestPermission();
+    await store.markAskedPermission();
+    notifyListeners();
+    if (!notificationsAllowed) return false;
+    await notifier.sendTest(
+      title: appNameFor(_texts.language),
+      body: _texts.l10n.testNotificationBody,
+      laterBody: _texts.l10n.testNotificationLaterBody,
+      labels: NotificationLabels.of(_texts.l10n),
+    );
+    return true;
   }
 
   Future<void> toggleDone(TodayItem item) async {

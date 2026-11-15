@@ -56,6 +56,18 @@ abstract class ReminderNotifier {
   /// Asks the user to allow notifications. Returns whether they are allowed.
   Future<bool> requestPermission();
 
+  /// Whether the phone currently lets the app show notifications.
+  Future<bool> isAllowed();
+
+  /// Shows one notification now and schedules another a minute from now,
+  /// so the user can see that both kinds arrive.
+  Future<void> sendTest({
+    required String title,
+    required String body,
+    required String laterBody,
+    required NotificationLabels labels,
+  });
+
   /// Replaces everything scheduled with one repeating notification per
   /// time slot of [reminders].
   Future<void> sync(List<PlannedReminder> reminders, NotificationLabels labels);
@@ -79,6 +91,20 @@ class NoopReminderNotifier implements ReminderNotifier {
   }
 
   @override
+  Future<bool> isAllowed() async => true;
+
+  int testsSent = 0;
+
+  @override
+  Future<void> sendTest({
+    required String title,
+    required String body,
+    required String laterBody,
+    required NotificationLabels labels,
+  }) async =>
+      testsSent++;
+
+  @override
   Future<void> sync(List<PlannedReminder> reminders, NotificationLabels labels) async =>
       lastSynced = List.of(reminders);
 }
@@ -88,6 +114,26 @@ const _categoryId = 'reminder';
 const _actionDone = 'done';
 const _actionSnooze = 'snooze';
 const snoozeMinutes = 15;
+
+/// The status-bar icon: `android/app/src/main/res/drawable/ic_stat_bell.xml`.
+const _androidIcon = 'ic_stat_bell';
+
+/// Test notifications use these two ids.
+const _testIdBase = 1 << 21;
+
+/// Reminders must arrive on time, so exact alarms are used when the phone
+/// allows them. Otherwise Android may deliver a notification much later.
+Future<AndroidScheduleMode> _scheduleMode() async {
+  if (defaultTargetPlatform != TargetPlatform.android) {
+    return AndroidScheduleMode.exactAllowWhileIdle;
+  }
+  final android = _plugin
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+  final exact = await android?.canScheduleExactNotifications() ?? false;
+  return exact
+      ? AndroidScheduleMode.exactAllowWhileIdle
+      : AndroidScheduleMode.inexactAllowWhileIdle;
+}
 
 /// Snoozed notifications use ids from here up, clear of the repeating ones.
 const _snoozeIdBase = 1 << 20;
@@ -146,7 +192,7 @@ Future<void> _initPlugin(
 }) =>
     _plugin.initialize(
       settings: InitializationSettings(
-        android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
+        android: const AndroidInitializationSettings(_androidIcon),
         iOS: DarwinInitializationSettings(
           // Permission is asked later, when the first reminder is switched on.
           requestAlertPermission: false,
@@ -206,7 +252,7 @@ Future<void> _handleResponse(NotificationResponse response) async {
         scheduledDate:
             tz.TZDateTime.now(tz.local).add(const Duration(minutes: snoozeMinutes)),
         notificationDetails: _details(await _savedLabels()),
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        androidScheduleMode: await _scheduleMode(),
       );
   }
 }
@@ -238,10 +284,57 @@ class LocalReminderNotifier implements ReminderNotifier {
   }
 
   @override
+  Future<bool> isAllowed() async {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final android = _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      return await android?.areNotificationsEnabled() ?? false;
+    }
+    final ios = _plugin
+        .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>();
+    return (await ios?.checkPermissions())?.isEnabled ?? false;
+  }
+
+  @override
+  Future<void> sendTest({
+    required String title,
+    required String body,
+    required String laterBody,
+    required NotificationLabels labels,
+  }) async {
+    // No buttons and no payload: a test is not something to tick off.
+    final details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        _channelId,
+        labels.channelName,
+        channelDescription: labels.channelDescription,
+        importance: Importance.high,
+        priority: Priority.high,
+      ),
+      iOS: const DarwinNotificationDetails(),
+    );
+    await _plugin.show(
+      id: _testIdBase,
+      title: title,
+      body: body,
+      notificationDetails: details,
+    );
+    await _plugin.zonedSchedule(
+      id: _testIdBase + 1,
+      title: title,
+      body: laterBody,
+      scheduledDate: tz.TZDateTime.now(tz.local).add(const Duration(minutes: 1)),
+      notificationDetails: details,
+      androidScheduleMode: await _scheduleMode(),
+    );
+  }
+
+  @override
   Future<void> sync(List<PlannedReminder> reminders, NotificationLabels labels) async {
     await _plugin.cancelAllPendingNotifications();
     final now = DateTime.now();
     final details = _details(labels);
+    final mode = await _scheduleMode();
     var id = 0;
     for (final planned in reminders) {
       final reminder = planned.reminder;
@@ -264,9 +357,7 @@ class LocalReminderNotifier implements ReminderNotifier {
             ),
             scheduledDate: tz.TZDateTime.from(first, tz.local),
             notificationDetails: details,
-            // Inexact timing needs no special permission; reminders may
-            // arrive a few minutes late when the phone is saving battery.
-            androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+            androidScheduleMode: mode,
             matchDateTimeComponents: switch (schedule.type) {
               ScheduleType.daily => DateTimeComponents.time,
               ScheduleType.weekly => DateTimeComponents.dayOfWeekAndTime,

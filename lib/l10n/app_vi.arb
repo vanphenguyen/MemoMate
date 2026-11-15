@@ -55,5 +55,9 @@
   "actionDone": "Xong",
   "actionSnooze": "Nhắc lại sau {minutes} phút",
   "languageTitle": "Ngôn ngữ",
-  "languageFollowPhone": "Theo điện thoại"
+  "languageFollowPhone": "Theo điện thoại",
+  "testNotification": "Gửi thông báo thử",
+  "testNotificationBody": "Thông báo đang hoạt động.",
+  "testNotificationLaterBody": "Thông báo hẹn giờ cũng hoạt động.",
+  "testNotificationSent": "Đã gửi. Một thông báo nữa sẽ đến sau khoảng 1 phút."
 }

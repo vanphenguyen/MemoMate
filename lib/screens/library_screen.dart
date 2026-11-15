@@ -77,6 +77,26 @@ class LibraryScreen extends StatelessWidget {
                 _templateRow(context, controller, group, template),
             ],
           ),
+        if (controller.notifier.supported) ...[
+          const SizedBox(height: 24),
+          OutlinedButton.icon(
+            key: const ValueKey('test-notification'),
+            onPressed: () async {
+              final messenger = ScaffoldMessenger.of(context);
+              final sent = await controller.sendTestNotification();
+              messenger
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(
+                  content: Text(
+                    sent ? l10n.testNotificationSent : l10n.notificationsOffNotice,
+                  ),
+                ));
+            },
+            icon: const Icon(Icons.notifications_active_outlined),
+            label: Text(l10n.testNotification),
+            style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+          ),
+        ],
       ],
     );
   }

@@ -213,4 +213,18 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get languageFollowPhone => 'Ikuti ponsel';
+
+  @override
+  String get testNotification => 'Kirim notifikasi uji';
+
+  @override
+  String get testNotificationBody => 'Notifikasi berfungsi.';
+
+  @override
+  String get testNotificationLaterBody =>
+      'Notifikasi terjadwal juga berfungsi.';
+
+  @override
+  String get testNotificationSent =>
+      'Terkirim. Satu lagi akan tiba dalam sekitar 1 menit.';
 }

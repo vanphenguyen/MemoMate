@@ -214,4 +214,17 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get languageFollowPhone => 'Theo điện thoại';
+
+  @override
+  String get testNotification => 'Gửi thông báo thử';
+
+  @override
+  String get testNotificationBody => 'Thông báo đang hoạt động.';
+
+  @override
+  String get testNotificationLaterBody => 'Thông báo hẹn giờ cũng hoạt động.';
+
+  @override
+  String get testNotificationSent =>
+      'Đã gửi. Một thông báo nữa sẽ đến sau khoảng 1 phút.';
 }

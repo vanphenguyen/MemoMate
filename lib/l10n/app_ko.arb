@@ -55,5 +55,9 @@
   "actionDone": "완료",
   "actionSnooze": "{minutes}분 후 다시 알림",
   "languageTitle": "언어",
-  "languageFollowPhone": "휴대폰 설정 따르기"
+  "languageFollowPhone": "휴대폰 설정 따르기",
+  "testNotification": "테스트 알림 보내기",
+  "testNotificationBody": "알림이 정상적으로 작동합니다.",
+  "testNotificationLaterBody": "예약 알림도 정상적으로 작동합니다.",
+  "testNotificationSent": "보냈습니다. 약 1분 후에 하나 더 도착합니다."
 }

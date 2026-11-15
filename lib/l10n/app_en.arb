@@ -144,5 +144,9 @@
     }
   },
   "languageTitle": "Language",
-  "languageFollowPhone": "Same as phone"
+  "languageFollowPhone": "Same as phone",
+  "testNotification": "Send a test notification",
+  "testNotificationBody": "Notifications are working.",
+  "testNotificationLaterBody": "Scheduled notifications are working too.",
+  "testNotificationSent": "Sent. Another one will arrive in about 1 minute."
 }

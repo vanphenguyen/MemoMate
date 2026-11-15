@@ -55,5 +55,9 @@
   "actionDone": "Feito",
   "actionSnooze": "Lembrar em {minutes} min",
   "languageTitle": "Idioma",
-  "languageFollowPhone": "Igual ao celular"
+  "languageFollowPhone": "Igual ao celular",
+  "testNotification": "Enviar notificação de teste",
+  "testNotificationBody": "As notificações estão funcionando.",
+  "testNotificationLaterBody": "As notificações agendadas também funcionam.",
+  "testNotificationSent": "Enviada. Outra chegará em cerca de 1 minuto."
 }

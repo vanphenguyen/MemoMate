@@ -55,5 +55,9 @@
   "actionDone": "Erledigt",
   "actionSnooze": "In {minutes} Min. erinnern",
   "languageTitle": "Sprache",
-  "languageFollowPhone": "Wie das Handy"
+  "languageFollowPhone": "Wie das Handy",
+  "testNotification": "Testmitteilung senden",
+  "testNotificationBody": "Mitteilungen funktionieren.",
+  "testNotificationLaterBody": "Geplante Mitteilungen funktionieren auch.",
+  "testNotificationSent": "Gesendet. Eine weitere kommt in etwa 1 Minute."
 }

@@ -55,5 +55,9 @@
   "actionDone": "Selesai",
   "actionSnooze": "Ingatkan lagi {minutes} menit",
   "languageTitle": "Bahasa",
-  "languageFollowPhone": "Ikuti ponsel"
+  "languageFollowPhone": "Ikuti ponsel",
+  "testNotification": "Kirim notifikasi uji",
+  "testNotificationBody": "Notifikasi berfungsi.",
+  "testNotificationLaterBody": "Notifikasi terjadwal juga berfungsi.",
+  "testNotificationSent": "Terkirim. Satu lagi akan tiba dalam sekitar 1 menit."
 }

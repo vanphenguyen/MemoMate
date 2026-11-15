@@ -47,6 +47,9 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
   đủ cả 10 ngôn ngữ. Thêm ngôn ngữ mới: thêm `app_xx.arb`, thêm vào `languageNames`, thêm `xx` vào mọi chỗ trong JSON và vào
   `CFBundleLocalizations` của `ios/Runner/Info.plist`.
 - Lời nhắc từ thư viện không lưu tên riêng (`Reminder.title` là null) nên tự đổi theo ngôn ngữ; chỉ lưu tên khi người dùng tự sửa.
+- Android: lời nhắc phải dùng hẹn giờ chính xác (`_scheduleMode` trong `reminder_notifier.dart`); kiểu không chính xác
+  bị Android giữ lại rất lâu. Biểu tượng thông báo là `res/drawable/ic_stat_bell.xml` (không dùng biểu tượng app),
+  được giữ lại trong bản release nhờ `res/raw/keep.xml`.
 - iPhone chỉ giữ 64 thông báo đã lên lịch cho mỗi app. Tổng số lần nhắc bị chặn ở 60 (`maxNotificationSlots`);
   bật cả thư viện phải nằm trong giới hạn này (có bài kiểm tra).
 - Lịch theo tháng chỉ cho chọn ngày 1 đến 28, vì ngày 29 đến 31 bị bỏ qua ở tháng ngắn.

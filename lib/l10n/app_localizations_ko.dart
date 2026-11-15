@@ -209,4 +209,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get languageFollowPhone => '휴대폰 설정 따르기';
+
+  @override
+  String get testNotification => '테스트 알림 보내기';
+
+  @override
+  String get testNotificationBody => '알림이 정상적으로 작동합니다.';
+
+  @override
+  String get testNotificationLaterBody => '예약 알림도 정상적으로 작동합니다.';
+
+  @override
+  String get testNotificationSent => '보냈습니다. 약 1분 후에 하나 더 도착합니다.';
 }

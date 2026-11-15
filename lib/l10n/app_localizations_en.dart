@@ -215,4 +215,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageFollowPhone => 'Same as phone';
+
+  @override
+  String get testNotification => 'Send a test notification';
+
+  @override
+  String get testNotificationBody => 'Notifications are working.';
+
+  @override
+  String get testNotificationLaterBody =>
+      'Scheduled notifications are working too.';
+
+  @override
+  String get testNotificationSent =>
+      'Sent. Another one will arrive in about 1 minute.';
 }

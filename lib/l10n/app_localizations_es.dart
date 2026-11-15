@@ -215,4 +215,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get languageFollowPhone => 'Igual que el teléfono';
+
+  @override
+  String get testNotification => 'Enviar notificación de prueba';
+
+  @override
+  String get testNotificationBody => 'Las notificaciones funcionan.';
+
+  @override
+  String get testNotificationLaterBody =>
+      'Las notificaciones programadas también funcionan.';
+
+  @override
+  String get testNotificationSent =>
+      'Enviada. Llegará otra en aproximadamente 1 minuto.';
 }

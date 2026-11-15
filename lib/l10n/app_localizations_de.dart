@@ -217,4 +217,18 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get languageFollowPhone => 'Wie das Handy';
+
+  @override
+  String get testNotification => 'Testmitteilung senden';
+
+  @override
+  String get testNotificationBody => 'Mitteilungen funktionieren.';
+
+  @override
+  String get testNotificationLaterBody =>
+      'Geplante Mitteilungen funktionieren auch.';
+
+  @override
+  String get testNotificationSent =>
+      'Gesendet. Eine weitere kommt in etwa 1 Minute.';
 }

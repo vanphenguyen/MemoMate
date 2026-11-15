@@ -55,5 +55,9 @@
   "actionDone": "完成",
   "actionSnooze": "{minutes} 分钟后再提醒",
   "languageTitle": "语言",
-  "languageFollowPhone": "跟随手机"
+  "languageFollowPhone": "跟随手机",
+  "testNotification": "发送测试通知",
+  "testNotificationBody": "通知工作正常。",
+  "testNotificationLaterBody": "定时通知也工作正常。",
+  "testNotificationSent": "已发送。大约 1 分钟后还会收到一条。"
 }
