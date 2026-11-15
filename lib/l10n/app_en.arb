@@ -142,5 +142,7 @@
         "type": "int"
       }
     }
-  }
+  },
+  "languageTitle": "Language",
+  "languageFollowPhone": "Same as phone"
 }

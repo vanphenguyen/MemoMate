@@ -4,6 +4,7 @@ import '../app.dart';
 import '../app_controller.dart';
 import '../models/reminder.dart';
 import '../widgets/reminder_icons.dart';
+import '../widgets/screen_header.dart';
 import 'edit_reminder_screen.dart';
 
 /// Shown when the phone cannot hold any more scheduled notifications.
@@ -31,21 +32,14 @@ class LibraryScreen extends StatelessWidget {
     final controller = AppScope.of(context);
     final texts = AppScope.textsOf(context);
     final l10n = texts.l10n;
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
     final custom = controller.customReminders;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
       children: [
-        Text(
-          l10n.activeCount(controller.reminders.length),
-          style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          l10n.tabReminders,
-          style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
+        ScreenHeader(
+          caption: l10n.activeCount(controller.reminders.length),
+          title: l10n.tabReminders,
         ),
         const SizedBox(height: 16),
         FilledButton.tonalIcon(

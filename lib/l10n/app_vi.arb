@@ -53,5 +53,7 @@
   "notifChannelName": "Lời nhắc",
   "notifChannelDescription": "Các lời nhắc bạn đã bật",
   "actionDone": "Xong",
-  "actionSnooze": "Nhắc lại sau {minutes} phút"
+  "actionSnooze": "Nhắc lại sau {minutes} phút",
+  "languageTitle": "Ngôn ngữ",
+  "languageFollowPhone": "Theo điện thoại"
 }

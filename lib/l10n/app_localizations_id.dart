@@ -207,4 +207,10 @@ class AppLocalizationsId extends AppLocalizations {
   String actionSnooze(int minutes) {
     return 'Ingatkan lagi $minutes menit';
   }
+
+  @override
+  String get languageTitle => 'Bahasa';
+
+  @override
+  String get languageFollowPhone => 'Ikuti ponsel';
 }

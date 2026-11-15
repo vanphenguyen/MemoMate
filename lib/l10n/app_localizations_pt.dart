@@ -210,4 +210,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String actionSnooze(int minutes) {
     return 'Lembrar em $minutes min';
   }
+
+  @override
+  String get languageTitle => 'Idioma';
+
+  @override
+  String get languageFollowPhone => 'Igual ao celular';
 }

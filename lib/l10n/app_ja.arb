@@ -53,5 +53,7 @@
   "notifChannelName": "リマインダー",
   "notifChannelDescription": "オンにしたリマインダー",
   "actionDone": "完了",
-  "actionSnooze": "{minutes}分後に再通知"
+  "actionSnooze": "{minutes}分後に再通知",
+  "languageTitle": "言語",
+  "languageFollowPhone": "スマホの設定に合わせる"
 }

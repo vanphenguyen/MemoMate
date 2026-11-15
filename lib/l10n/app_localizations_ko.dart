@@ -203,4 +203,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String actionSnooze(int minutes) {
     return '$minutes분 후 다시 알림';
   }
+
+  @override
+  String get languageTitle => '언어';
+
+  @override
+  String get languageFollowPhone => '휴대폰 설정 따르기';
 }

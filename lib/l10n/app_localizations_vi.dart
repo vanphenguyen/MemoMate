@@ -208,4 +208,10 @@ class AppLocalizationsVi extends AppLocalizations {
   String actionSnooze(int minutes) {
     return 'Nhắc lại sau $minutes phút';
   }
+
+  @override
+  String get languageTitle => 'Ngôn ngữ';
+
+  @override
+  String get languageFollowPhone => 'Theo điện thoại';
 }

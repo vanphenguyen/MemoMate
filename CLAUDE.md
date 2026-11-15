@@ -35,9 +35,10 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
 ## Quy ước
 - Mã định danh app: `com.phenv.nhonhe` (Android và iOS). Không đổi sau khi đã lên store.
 - Không thu thập dữ liệu, không cần mạng, không tài khoản. Không thêm thư viện gửi dữ liệu ra ngoài nếu chủ dự án chưa đồng ý.
-- Đa ngôn ngữ: vi, en, zh, es, pt, fr, de, ja, ko, id. App theo ngôn ngữ của máy, không có thì dùng tiếng Anh.
+- Đa ngôn ngữ: vi, en, zh, es, pt, fr, de, ja, ko, id. App theo ngôn ngữ của máy, không có thì dùng tiếng Anh;
+  người dùng tự chọn được bằng nút quả địa cầu (`lib/widgets/screen_header.dart`, tên ngôn ngữ ở `languageNames`).
   **Không viết chữ hiển thị thẳng trong code**: thêm vào mọi file `.arb`; tên và nội dung lời nhắc có sẵn nằm trong JSON,
-  đủ cả 10 ngôn ngữ. Thêm ngôn ngữ mới: thêm `app_xx.arb`, thêm `xx` vào mọi chỗ trong JSON và vào
+  đủ cả 10 ngôn ngữ. Thêm ngôn ngữ mới: thêm `app_xx.arb`, thêm vào `languageNames`, thêm `xx` vào mọi chỗ trong JSON và vào
   `CFBundleLocalizations` của `ios/Runner/Info.plist`.
 - Lời nhắc từ thư viện không lưu tên riêng (`Reminder.title` là null) nên tự đổi theo ngôn ngữ; chỉ lưu tên khi người dùng tự sửa.
 - iPhone chỉ giữ 64 thông báo đã lên lịch cho mỗi app. Tổng số lần nhắc bị chặn ở 60 (`maxNotificationSlots`);

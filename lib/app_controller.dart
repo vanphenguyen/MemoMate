@@ -40,6 +40,16 @@ class AppController extends ChangeNotifier {
   /// Everything the app says, in the current language.
   AppTexts get texts => _texts;
 
+  /// The language picked in the app; null means "same as the phone".
+  String? get languageChoice => store.languageChoice;
+
+  /// Picks a language by code, or null to follow the phone again. The app
+  /// rebuilds in that language, which then reaches [setLocale].
+  Future<void> chooseLanguage(String? language) async {
+    await store.saveLanguageChoice(language);
+    notifyListeners();
+  }
+
   /// Switches language. Notifications are rewritten in the new language.
   Future<void> setLocale(Locale locale) async {
     if (locale == _texts.locale) return;

@@ -17,7 +17,11 @@ void main() {
   final now = DateTime(2026, 11, 16, 10, 0);
   late NoopReminderNotifier notifier;
 
-  Future<AppController> boot(WidgetTester tester, {String language = 'vi'}) async {
+  Future<AppController> boot(
+    WidgetTester tester, {
+    String language = 'vi',
+    bool forceLanguage = true,
+  }) async {
     SharedPreferences.setMockInitialValues({});
     notifier = NoopReminderNotifier();
     // Asset loading is real I/O, which only completes inside runAsync.
@@ -32,7 +36,10 @@ void main() {
     addTearDown(() => tester.binding.setSurfaceSize(null));
     // Start from nothing, so a second boot in one test is a fresh app.
     await tester.pumpWidget(const SizedBox());
-    await tester.pumpWidget(NhoNheApp(controller: controller, locale: Locale(language)));
+    await tester.pumpWidget(NhoNheApp(
+      controller: controller,
+      locale: forceLanguage ? Locale(language) : null,
+    ));
     await tester.pumpAndSettle();
     return controller;
   }
@@ -179,6 +186,46 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull, reason: 'editor, $locale');
     }
+  });
+
+  testWidgets('pick a language in the app, then go back to the phone language',
+      (tester) async {
+    // The test phone speaks English.
+    final controller = await boot(tester, language: 'en', forceLanguage: false);
+    final group = controller.groups.first;
+    await tester.runAsync(() => controller.enableTemplate(group.templates[1], group));
+    await tester.pumpAndSettle();
+    expect(find.text('Today'), findsWidgets);
+
+    await tester.tap(find.byKey(const ValueKey('language-button')).first);
+    await tester.pumpAndSettle();
+    expect(find.text('Same as phone'), findsOneWidget);
+    for (final name in languageNames.values) {
+      expect(find.text(name), findsOneWidget);
+    }
+    await tester.ensureVisible(find.byKey(const ValueKey('language-ko')));
+    await tester.tap(find.byKey(const ValueKey('language-ko')));
+    await tester.pumpAndSettle();
+    await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+
+    expect(find.text('오늘'), findsWidgets);
+    expect(controller.store.languageChoice, 'ko');
+    expect(controller.store.language, 'ko');
+    expect(notifier.lastSynced.single.title, '약 먹기');
+
+    await tester.tap(find.byKey(const ValueKey('language-button')).first);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('language-phone')));
+    await tester.pumpAndSettle();
+    expect(find.text('Today'), findsWidgets);
+    expect(controller.store.languageChoice, isNull);
+  });
+
+  test('every app language is in the language list', () {
+    expect(
+      languageNames.keys.toSet(),
+      {for (final l in AppTexts.supportedLocales) l.languageCode},
+    );
   });
 
   test('picks the phone language when translated, English otherwise', () {

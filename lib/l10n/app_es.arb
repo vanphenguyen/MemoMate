@@ -53,5 +53,7 @@
   "notifChannelName": "Recordatorios",
   "notifChannelDescription": "Los recordatorios que activaste",
   "actionDone": "Hecho",
-  "actionSnooze": "Recordar en {minutes} min"
+  "actionSnooze": "Recordar en {minutes} min",
+  "languageTitle": "Idioma",
+  "languageFollowPhone": "Igual que el teléfono"
 }

@@ -209,4 +209,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String actionSnooze(int minutes) {
     return 'Recordar en $minutes min';
   }
+
+  @override
+  String get languageTitle => 'Idioma';
+
+  @override
+  String get languageFollowPhone => 'Igual que el teléfono';
 }

@@ -53,5 +53,7 @@
   "notifChannelName": "Pengingat",
   "notifChannelDescription": "Pengingat yang Anda aktifkan",
   "actionDone": "Selesai",
-  "actionSnooze": "Ingatkan lagi {minutes} menit"
+  "actionSnooze": "Ingatkan lagi {minutes} menit",
+  "languageTitle": "Bahasa",
+  "languageFollowPhone": "Ikuti ponsel"
 }

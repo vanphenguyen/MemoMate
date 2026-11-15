@@ -53,5 +53,7 @@
   "notifChannelName": "알림",
   "notifChannelDescription": "켜 둔 알림",
   "actionDone": "완료",
-  "actionSnooze": "{minutes}분 후 다시 알림"
+  "actionSnooze": "{minutes}분 후 다시 알림",
+  "languageTitle": "언어",
+  "languageFollowPhone": "휴대폰 설정 따르기"
 }

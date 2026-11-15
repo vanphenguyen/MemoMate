@@ -49,7 +49,8 @@ Sau khi sửa, chạy `flutter test` để kiểm tra dữ liệu.
 ## Ngôn ngữ
 
 App có 10 ngôn ngữ: Việt, Anh, Trung (giản thể), Tây Ban Nha, Bồ Đào Nha, Pháp, Đức, Nhật, Hàn, Indonesia.
-App tự theo ngôn ngữ của điện thoại; máy dùng ngôn ngữ khác thì hiện tiếng Anh. Chưa có nút đổi ngôn ngữ trong app.
+App tự theo ngôn ngữ của điện thoại; máy dùng ngôn ngữ khác thì hiện tiếng Anh. Người dùng cũng có thể tự chọn
+ngôn ngữ bằng nút quả địa cầu ở góc trên bên phải; lựa chọn "Theo điện thoại" quay về chế độ tự động.
 
 - Chữ giao diện: `lib/l10n/app_<mã>.arb`, mỗi ngôn ngữ một file. Sửa xong chạy `flutter gen-l10n`.
 - Tên và nội dung lời nhắc có sẵn: trong các file JSON ở trên.
@@ -66,7 +67,7 @@ Các bản dịch do AI viết, **chưa có người bản xứ soát lại**. N
   Một số hãng (Xiaomi, Oppo, Vivo, Huawei) còn tự tắt app chạy nền; người dùng phải tắt "tối ưu pin" cho app.
 - Bấm "Xong" trên thông báo luôn tính cho **ngày hôm nay**. Thông báo từ hôm qua bấm hôm nay sẽ tính vào hôm nay.
 - Bản web chỉ để xem giao diện, không gửi thông báo.
-- Đổi ngôn ngữ máy khi app đang mở: trên iPhone, chữ trên hai nút của thông báo chỉ đổi sau khi mở lại app.
+- Đổi ngôn ngữ (trong app hoặc của máy) khi app đang mở: trên iPhone, chữ trên hai nút của thông báo chỉ đổi sau khi mở lại app.
 - Bộ lời nhắc giống nhau ở mọi nước; vài lời nhắc (khóa gas, ngày đóng tiền điện) hợp với Việt Nam hơn.
 
 ## Chưa làm (để sau)

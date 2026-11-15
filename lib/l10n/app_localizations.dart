@@ -437,6 +437,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remind me in {minutes} min'**
   String actionSnooze(int minutes);
+
+  /// No description provided for @languageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageTitle;
+
+  /// No description provided for @languageFollowPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as phone'**
+  String get languageFollowPhone;
 }
 
 class _AppLocalizationsDelegate

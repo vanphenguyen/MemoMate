@@ -53,5 +53,7 @@
   "notifChannelName": "Erinnerungen",
   "notifChannelDescription": "Die Erinnerungen, die du eingeschaltet hast",
   "actionDone": "Erledigt",
-  "actionSnooze": "In {minutes} Min. erinnern"
+  "actionSnooze": "In {minutes} Min. erinnern",
+  "languageTitle": "Sprache",
+  "languageFollowPhone": "Wie das Handy"
 }

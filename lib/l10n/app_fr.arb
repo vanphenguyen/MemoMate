@@ -53,5 +53,7 @@
   "notifChannelName": "Rappels",
   "notifChannelDescription": "Les rappels que vous avez activés",
   "actionDone": "Fait",
-  "actionSnooze": "Rappeler dans {minutes} min"
+  "actionSnooze": "Rappeler dans {minutes} min",
+  "languageTitle": "Langue",
+  "languageFollowPhone": "Comme le téléphone"
 }

@@ -6,6 +6,21 @@ import 'l10n/app_localizations.dart';
 import 'models/reminder.dart';
 import 'models/schedule.dart';
 
+/// Each language the app has, by its own name, in the order shown in the
+/// language list.
+const languageNames = <String, String>{
+  'vi': 'Tiếng Việt',
+  'en': 'English',
+  'zh': '简体中文',
+  'es': 'Español',
+  'pt': 'Português',
+  'fr': 'Français',
+  'de': 'Deutsch',
+  'ja': '日本語',
+  'ko': '한국어',
+  'id': 'Bahasa Indonesia',
+};
+
 /// Picks the app language: the first of the phone's languages that the app
 /// has a translation for, otherwise English.
 Locale resolveLocale(List<Locale>? deviceLocales) {

@@ -202,4 +202,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String actionSnooze(int minutes) {
     return '$minutes 分钟后再提醒';
   }
+
+  @override
+  String get languageTitle => '语言';
+
+  @override
+  String get languageFollowPhone => '跟随手机';
 }

@@ -13,14 +13,19 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // The app follows the phone's language (English if it has no translation).
-  final texts = AppTexts(resolveLocale(PlatformDispatcher.instance.locales));
+  // unless a language was picked in the app.
+  final store = await ReminderStore.load();
+  final choice = store.languageChoice;
+  final texts = AppTexts(
+    choice != null ? Locale(choice) : resolveLocale(PlatformDispatcher.instance.locales),
+  );
   // Browsers cannot schedule notifications, so the web build is a preview.
   final ReminderNotifier notifier =
       kIsWeb ? NoopReminderNotifier() : LocalReminderNotifier();
   await notifier.init(NotificationLabels.of(texts.l10n));
   final controller = AppController(
     groups: await TemplateRepository().loadAll(),
-    store: await ReminderStore.load(),
+    store: store,
     notifier: notifier,
     texts: texts,
   );

@@ -53,5 +53,7 @@
   "notifChannelName": "提醒",
   "notifChannelDescription": "你已开启的提醒",
   "actionDone": "完成",
-  "actionSnooze": "{minutes} 分钟后再提醒"
+  "actionSnooze": "{minutes} 分钟后再提醒",
+  "languageTitle": "语言",
+  "languageFollowPhone": "跟随手机"
 }

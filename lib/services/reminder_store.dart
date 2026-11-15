@@ -63,6 +63,13 @@ class ReminderStore {
 
   Future<void> saveLanguage(String language) => _prefs.setString('language', language);
 
+  /// The language picked in the app; null means "same as the phone".
+  String? get languageChoice => _prefs.getString('languageChoice');
+
+  Future<void> saveLanguageChoice(String? language) => language == null
+      ? _prefs.remove('languageChoice')
+      : _prefs.setString('languageChoice', language);
+
   /// Deletes ticks from more than [keepDays] days before [today].
   Future<void> pruneOld(DateTime today) async {
     final cutoff = dayKey(DateTime(today.year, today.month, today.day - keepDays));

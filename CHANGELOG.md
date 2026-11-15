@@ -11,5 +11,6 @@ Bản đầu tiên.
 - Thông báo có nút "Xong" và "Nhắc lại sau 15 phút" (Android và iOS).
 - Dữ liệu chỉ lưu trên máy.
 - Chọn biểu tượng (20 mẫu) cho lời nhắc tự tạo.
+- Nút đổi ngôn ngữ trong app (hình quả địa cầu), có lựa chọn "Theo điện thoại".
 - 10 ngôn ngữ, tự theo ngôn ngữ của điện thoại: Việt, Anh, Trung (giản thể), Tây Ban Nha, Bồ Đào Nha, Pháp, Đức,
   Nhật, Hàn, Indonesia.

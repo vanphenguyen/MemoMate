@@ -53,5 +53,7 @@
   "notifChannelName": "Lembretes",
   "notifChannelDescription": "Os lembretes que você ativou",
   "actionDone": "Feito",
-  "actionSnooze": "Lembrar em {minutes} min"
+  "actionSnooze": "Lembrar em {minutes} min",
+  "languageTitle": "Idioma",
+  "languageFollowPhone": "Igual ao celular"
 }

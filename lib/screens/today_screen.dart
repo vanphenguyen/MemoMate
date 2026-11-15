@@ -4,6 +4,7 @@ import '../app.dart';
 import '../logic/today.dart';
 import '../widgets/progress_ring.dart';
 import '../widgets/reminder_icons.dart';
+import '../widgets/screen_header.dart';
 
 /// Today's reminders with one-tap ticking.
 class TodayScreen extends StatelessWidget {
@@ -16,8 +17,6 @@ class TodayScreen extends StatelessWidget {
     final controller = AppScope.of(context);
     final texts = AppScope.textsOf(context);
     final l10n = texts.l10n;
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
     final now = controller.now;
     final items = controller.today();
     final pending = [for (final i in items) if (!i.done) i];
@@ -26,15 +25,7 @@ class TodayScreen extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 20, 16, 24),
       children: [
-        Text(
-          texts.dateLabel(now),
-          style: theme.textTheme.bodyMedium?.copyWith(color: scheme.onSurfaceVariant),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          l10n.tabToday,
-          style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700),
-        ),
+        ScreenHeader(caption: texts.dateLabel(now), title: l10n.tabToday),
         const SizedBox(height: 16),
         if (!controller.notifier.supported) ...[
           _Notice(icon: Icons.info_outline, text: l10n.webPreviewNotice),

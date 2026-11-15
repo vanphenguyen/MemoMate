@@ -204,4 +204,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String actionSnooze(int minutes) {
     return '$minutes分後に再通知';
   }
+
+  @override
+  String get languageTitle => '言語';
+
+  @override
+  String get languageFollowPhone => 'スマホの設定に合わせる';
 }

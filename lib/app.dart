@@ -7,8 +7,11 @@ import 'texts.dart';
 
 /// Gives every screen the [AppController] and rebuilds them when it changes.
 class AppScope extends InheritedNotifier<AppController> {
-  const AppScope({super.key, required AppController controller, required super.child})
-      : super(notifier: controller);
+  const AppScope({
+    super.key,
+    required AppController controller,
+    required super.child,
+  }) : super(notifier: controller);
 
   static AppController of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<AppScope>()!.notifier!;
@@ -37,27 +40,42 @@ class NhoNheApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScope(
       controller: controller,
-      child: MaterialApp(
-        title: appName,
-        debugShowCheckedModeBanner: false,
-        locale: locale,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        localeListResolutionCallback: (device, supported) => resolveLocale(device),
-        builder: (context, child) {
-          // Keeps reminder names and notifications in the language shown.
-          controller.setLocale(Localizations.localeOf(context));
-          return child!;
-        },
-        theme: _theme(Brightness.light),
-        darkTheme: _theme(Brightness.dark),
-        home: const HomeShell(),
+      // Rebuilt when the controller changes, so picking a language in the
+      // app takes effect at once.
+      child: ListenableBuilder(
+        listenable: controller,
+        builder: (context, _) => _app(),
       ),
     );
   }
 
+  Widget _app() {
+    final choice = controller.languageChoice;
+    return MaterialApp(
+      title: appName,
+      debugShowCheckedModeBanner: false,
+      // A language picked in the app wins; otherwise the phone's is used.
+      locale: locale ?? (choice == null ? null : Locale(choice)),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localeListResolutionCallback: (device, supported) =>
+          resolveLocale(device),
+      builder: (context, child) {
+        // Keeps reminder names and notifications in the language shown.
+        controller.setLocale(Localizations.localeOf(context));
+        return child!;
+      },
+      theme: _theme(Brightness.light),
+      darkTheme: _theme(Brightness.dark),
+      home: const HomeShell(),
+    );
+  }
+
   ThemeData _theme(Brightness brightness) {
-    final scheme = ColorScheme.fromSeed(seedColor: seedColor, brightness: brightness);
+    final scheme = ColorScheme.fromSeed(
+      seedColor: seedColor,
+      brightness: brightness,
+    );
     return ThemeData(
       colorScheme: scheme,
       useMaterial3: true,
