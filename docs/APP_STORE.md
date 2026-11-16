@@ -77,6 +77,15 @@ App Store Connect > app > tab Distribution (App Store):
 Bấm **Add for Review** rồi **Submit**. Apple thường duyệt trong 1 đến 3 ngày. Nếu bị từ chối, Apple ghi rõ lý do;
 gửi nội dung đó cho Claude để sửa.
 
+## Số thứ tự build
+Apple chỉ nhận bản có số build lớn hơn mọi bản đã tải lên. Workflow dùng ngày giờ lúc build (giờ UTC, dạng
+`YYMMDDHHMM`, ví dụ `2611160830`) làm số build, nên số này luôn tăng dù build ở tài khoản Codemagic nào.
+Nếu sau này build trên máy Mac, dùng cùng cách:
+
+```bash
+flutter build ipa --release --build-number=$(date -u +%y%m%d%H%M)
+```
+
 ## Mỗi lần ra bản mới
 Tăng `version` trong `pubspec.yaml`, đẩy lên `main`, chạy lại bước 6, rồi tạo phiên bản mới trên App Store Connect
 và gửi duyệt.

@@ -58,4 +58,6 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
 - Lịch theo tháng chỉ cho chọn ngày 1 đến 28, vì ngày 29 đến 31 bị bỏ qua ở tháng ngắn.
 - Mỗi thay đổi đáng kể: cập nhật `CHANGELOG.md`; khi phát hành tăng `version` trong `pubspec.yaml`
   (`x.y.z+build`, số build luôn tăng).
+  Bản iOS lấy số build từ ngày giờ UTC lúc build (`YYMMDDHHMM`, xem `codemagic.yaml`) để không phụ thuộc bộ đếm của
+  Codemagic; số build trong `pubspec.yaml` chỉ còn dùng cho Android.
 - Làm trên nhánh riêng, mở Pull Request vào `main`.

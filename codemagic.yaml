@@ -86,8 +86,12 @@ workflows:
         script: xcode-project use-profiles
       - name: Build the app
         script: |
+          # The build number is the UTC date and time (YYMMDDHHMM), so it
+          # always grows no matter which account or machine runs the build.
+          BUILD_NUMBER_NOW=$(date -u +%y%m%d%H%M)
+          echo "Build number: $BUILD_NUMBER_NOW"
           flutter build ipa --release \
-            --build-number="$PROJECT_BUILD_NUMBER" \
+            --build-number="$BUILD_NUMBER_NOW" \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
