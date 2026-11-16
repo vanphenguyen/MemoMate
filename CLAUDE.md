@@ -30,6 +30,9 @@ Chủ dự án không phải lập trình viên: trả lời bằng tiếng Vi�
   https://vanphenguyen.github.io/MemoMate/ (đổi tên repo thì phải sửa `--base-href` trong file đó).
 - Bản iPhone được build và tải lên App Store Connect bởi Codemagic (`codemagic.yaml`, chạy tay); các bước thiết lập
   ở `docs/APP_STORE.md`. Trang chính sách riêng tư là `web/privacy.html`, được đăng cùng bản web.
+- Nội dung trang App Store ở `docs/app-store/listing.md`. Ảnh ở `docs/app-store/screenshots/` được dựng từ bản web build
+  với `--dart-define=SCREENSHOTS=true` (ẩn dòng "bản xem thử trên web"). App chỉ khai báo cho iPhone
+  (`TARGETED_DEVICE_FAMILY = 1`) để không phải nộp ảnh iPad.
 - Biểu tượng app: sửa ảnh trong `assets/icon/` rồi chạy `dart run flutter_launcher_icons`.
 - Bản web chỉ để xem giao diện: trình duyệt không lên lịch thông báo được, nên web dùng `NoopReminderNotifier`.
 - Container cloud không tải được Android SDK; APK được build bởi GitHub Actions (`.github/workflows/build.yml`).

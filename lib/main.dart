@@ -20,8 +20,12 @@ Future<void> main() async {
     choice != null ? Locale(choice) : resolveLocale(PlatformDispatcher.instance.locales),
   );
   // Browsers cannot schedule notifications, so the web build is a preview.
-  final ReminderNotifier notifier =
-      kIsWeb ? NoopReminderNotifier() : LocalReminderNotifier();
+  // Built with --dart-define=SCREENSHOTS=true, the web build looks like the
+  // phone app (no "web preview" note) so store screenshots can be taken.
+  const forScreenshots = bool.fromEnvironment('SCREENSHOTS');
+  final ReminderNotifier notifier = kIsWeb
+      ? NoopReminderNotifier(supported: forScreenshots)
+      : LocalReminderNotifier();
   // A problem in the notification system must never keep the app from
   // opening, so setting it up is given a time limit and may fail quietly.
   await _guarded(() => notifier.init(NotificationLabels.of(texts.l10n)));

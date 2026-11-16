@@ -75,11 +75,13 @@ abstract class ReminderNotifier {
 
 /// Used on the web and in tests: remembers what was asked, shows nothing.
 class NoopReminderNotifier implements ReminderNotifier {
+  NoopReminderNotifier({this.supported = false});
+
   List<PlannedReminder> lastSynced = const [];
   int permissionRequests = 0;
 
   @override
-  bool get supported => false;
+  final bool supported;
 
   @override
   Future<void> init(NotificationLabels labels) async {}

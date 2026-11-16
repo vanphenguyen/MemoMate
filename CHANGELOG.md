@@ -1,6 +1,6 @@
 # Nhật ký thay đổi
 
-## 0.1.0 (chưa phát hành)
+## 1.0.0 (chưa phát hành)
 
 Bản đầu tiên.
 
