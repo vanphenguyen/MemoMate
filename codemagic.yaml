@@ -22,6 +22,26 @@ workflows:
     artifacts:
       - /tmp/xcodebuild_logs/*.log
 
+  # Builds the app for the iPhone simulator (no Apple account needed), for
+  # Codemagic's in-browser app preview. Simulator builds are debug builds.
+  ios-simulator:
+    name: iOS - Bản cho máy ảo iPhone (xem thử)
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    environment:
+      flutter: 3.47.8
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Get packages
+        script: flutter pub get
+      - name: Build for the simulator
+        script: flutter build ios --simulator --debug
+      - name: Zip the app
+        script: cd build/ios/iphonesimulator && zip -r Runner.app.zip Runner.app
+    artifacts:
+      - build/ios/iphonesimulator/Runner.app.zip
+
   # Builds an APK to install on an Android phone for testing. It is signed
   # with the debug key, so it is not for Google Play.
   android-apk:
