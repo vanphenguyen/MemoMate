@@ -4,6 +4,17 @@ Sao chép từng mục vào App Store Connect > app ForgetNot > tab Distribution
 Bản tiếng Anh là ngôn ngữ chính; bản tiếng Việt thêm bằng nút chọn ngôn ngữ ở góc trên bên phải trang đó
 (Add localization > Vietnamese).
 
+## Cách chọn từ khóa (đọc trước khi sửa)
+
+Trên App Store, Apple chỉ dùng ba ô để xếp hạng tìm kiếm: **Name** (nặng nhất), **Subtitle** và **Keywords**.
+Phần Description không được tính vào tìm kiếm; nó chỉ để thuyết phục người đã mở trang app.
+
+- Không lặp lại một từ ở cả ba ô: Apple tự ghép từ giữa các ô, lặp lại là phí chỗ.
+- Ô Keywords: cách nhau bằng dấu phẩy, không có dấu cách, không dùng tên app khác.
+- Bản tiếng Việt có thêm vài từ không dấu, vì nhiều người gõ tìm kiếm không dấu.
+- Các từ dưới đây được chọn theo suy luận về cách người dùng tìm, **chưa dựa trên số liệu lượt tìm kiếm thật**.
+  Sau khi app lên store vài tuần, xem mục App Analytics > Search terms trong App Store Connect rồi chỉnh lại.
+
 ## Thông tin chung (không theo ngôn ngữ)
 
 | Mục | Giá trị |
@@ -33,13 +44,13 @@ All notifications are local notifications scheduled on the device. The app does 
 **Name** (tối đa 30 ký tự)
 
 ```
-ForgetNot
+ForgetNot: Daily Reminders
 ```
 
 **Subtitle** (tối đa 30 ký tự)
 
 ```
-Simple daily reminders
+Water, meds, bills & chores
 ```
 
 **Promotional Text** (tối đa 170 ký tự, sửa được bất cứ lúc nào)
@@ -81,7 +92,7 @@ English, Vietnamese, Chinese (Simplified), Spanish, Portuguese, French, German, 
 **Keywords** (tối đa 100 ký tự, cách nhau bằng dấu phẩy, không có dấu cách)
 
 ```
-reminder,remind,habit,water,medicine,pill,bills,routine,forgetful,todo,checklist,chores,daily
+habit,pill,medicine,routine,forgetful,todo,checklist,alarm,task,adhd,hydration,schedule,memory,tracker
 ```
 
 **What's New in This Version**
@@ -98,13 +109,13 @@ First release.
 **Name**
 
 ```
-Nhớ Nhé
+Nhớ Nhé: Nhắc việc mỗi ngày
 ```
 
 **Subtitle**
 
 ```
-Nhắc việc có sẵn, bật là chạy
+Uống nước, thuốc, hóa đơn
 ```
 
 **Promotional Text**
@@ -146,7 +157,7 @@ Tiếng Việt, Anh, Trung (giản thể), Tây Ban Nha, Bồ Đào Nha, Pháp, 
 **Keywords**
 
 ```
-nhắc việc,lời nhắc,uống nước,uống thuốc,thói quen,hay quên,hóa đơn,việc nhà,nhắc nhở
+lời nhắc,nhắc nhở,thói quen,hay quên,việc nhà,báo thức,lịch,nhac viec,uong nuoc,uong thuoc,thoi quen
 ```
 
 **What's New in This Version**

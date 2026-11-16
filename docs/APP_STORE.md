@@ -22,8 +22,8 @@ developer.apple.com > Account > Certificates, Identifiers & Profiles > **Identif
 
 ## 2. Tạo app trên App Store Connect
 appstoreconnect.apple.com > Apps > dấu **+** > New App.
-- Platform: iOS. Name: `ForgetNot` (nếu Apple báo trùng, thử `ForgetNot: Daily Reminders`). Primary language: English.
-- Sau khi tạo, thêm ngôn ngữ Vietnamese cho trang app và đặt tên ở đó là `Nhớ Nhé`.
+- Platform: iOS. Name: `ForgetNot: Daily Reminders` (tên kèm từ khóa giúp app dễ được tìm thấy; sửa được về sau). Primary language: English.
+- Sau khi tạo, thêm ngôn ngữ Vietnamese cho trang app và đặt tên ở đó là `Nhớ Nhé: Nhắc việc mỗi ngày`.
 - Bundle ID: chọn mã vừa đăng ký. SKU: ví dụ `nhonhe`.
 
 ## 3. Tạo khóa API cho Codemagic
