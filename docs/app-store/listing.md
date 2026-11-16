@@ -92,7 +92,7 @@ English, Vietnamese, Chinese (Simplified), Spanish, Portuguese, French, German, 
 **Keywords** (tối đa 100 ký tự, cách nhau bằng dấu phẩy, không có dấu cách)
 
 ```
-habit,pill,medicine,routine,forgetful,todo,checklist,alarm,task,adhd,hydration,schedule,memory,tracker
+habit,pill,medicine,routine,forgetful,todo,checklist,alarm,task,adhd,hydration,schedule,tracker
 ```
 
 **What's New in This Version**
