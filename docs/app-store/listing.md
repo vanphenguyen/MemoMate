@@ -101,8 +101,8 @@ habit,pill,medicine,routine,forgetful,todo,checklist,alarm,task,adhd,hydration,s
 First release.
 ```
 
-**Ảnh chụp màn hình** (mục iPhone 6.9" hoặc 6.5" Display): tải lên theo thứ tự
-`screenshots/en/1.png`, `2.png`, `3.png`, `4.png`.
+**Ảnh chụp màn hình**: tải lên theo thứ tự `screenshots/en/1.png`, `2.png`, `3.png`, `4.png` (cỡ 1206x2622, đúng cỡ
+mục "iPhone with Dynamic Island (medium display)" yêu cầu). Bản cỡ 1290x2796 cho màn hình lớn ở `screenshots/6.9-inch/`.
 
 ## Vietnamese
 

@@ -61,10 +61,10 @@ thử nút "Xong" và "Nhắc lại sau 15 phút" khi app đang đóng.
 
 ## 8. Điền thông tin trang App Store
 Nội dung viết sẵn (tên, phụ đề, mô tả, từ khóa, ghi chú cho người duyệt) ở `docs/app-store/listing.md`; ảnh chụp màn hình
-ở `docs/app-store/screenshots/` (tiếng Anh và tiếng Việt, cỡ 1290x2796).
+ở `docs/app-store/screenshots/en` và `vi` (cỡ 1206x2622; bản 1290x2796 ở `screenshots/6.9-inch/`).
 
 App Store Connect > app > tab Distribution (App Store):
-- **Ảnh chụp màn hình**: tải 4 ảnh có sẵn vào mục iPhone 6.9 inch (hoặc 6.5 inch). App chỉ khai báo cho iPhone nên không cần ảnh iPad.
+- **Ảnh chụp màn hình**: tải 4 ảnh có sẵn vào mục iPhone (tab App Previews and Screenshots). App chỉ khai báo cho iPhone nên không cần ảnh iPad.
 - **Mô tả, từ khóa, danh mục** (gợi ý: Productivity hoặc Health & Fitness).
 - **Support URL**: `https://github.com/vanphenguyen/MemoMate/issues`
 - **Privacy Policy URL**: `https://vanphenguyen.github.io/MemoMate/privacy.html`
